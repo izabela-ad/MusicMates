@@ -11,8 +11,8 @@ http://localhost:3000/#access_token=BQCI5nH4zRAWJtOXGmLMnZtgIWoScWSwSYz_eFgolhJW
 */
 // var request = require("request"); // "Request" library
 
-var client_id = "1d749561a8d143a996cf153f2f3ed2b2"; // Your client id
-var client_secret = "d13cbcf49c4147c9a98f2b2a62347912"; // Your secret
+var client_id = ""; // Your client id
+var client_secret = ""; // Your secret
 // document.querySelector("#search").addEventListener("click", getArtist);
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/";
