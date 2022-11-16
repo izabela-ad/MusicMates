@@ -1,3 +1,5 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import logo from "./logo.svg";
 import "./App.css";
 //newly added
@@ -10,7 +12,7 @@ http://localhost:3000/#access_token=BQCI5nH4zRAWJtOXGmLMnZtgIWoScWSwSYz_eFgolhJW
 
 */
 // var request = require("request"); // "Request" library
-
+const CLIENT_ID = "59759643100f409a9ba8dae7ddbb6a19";
 var client_id = ""; // Your client id
 var client_secret = ""; // Your secret
 // document.querySelector("#search").addEventListener("click", getArtist);
@@ -49,51 +51,53 @@ const WebApp = () => {
     }
   });
   const handleLogin = () => {
-    window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${client_id}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
+    window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
     // "${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_url=${REDIRECT_URL_AFTER_LOGIN}&response_type=token&show_dialog=true";
   };
   return (
     <div className="container">
-      <h1>MusicMate</h1>
-      <button onClick={handleLogin}>login into spotify</button>
+      {/* <h1>MusicMate</h1> */}
+
+      <img src={require("./musicmate.jpg")} />
+      <button onClick={handleLogin}>Login into Spotify</button>
     </div>
   );
 };
 export default WebApp;
 
-const getToken = async () => {
-  const result = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      Authorization:
-        "Basic " +
-        new Buffer.from(client_id + ":" + client_secret).toString("base64"),
-    },
-    body: "grant_type=client_credentials",
-  });
+// const getToken = async () => {
+//   const result = await fetch("https://accounts.spotify.com/api/token", {
+//     method: "POST",
+//     headers: {
+//       Authorization:
+//         "Basic " +
+//         new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+//     },
+//     body: "grant_type=client_credentials",
+//   });
 
-  const data = await result.json();
-  console.log(data.access_token);
-  return data.access_token;
-};
-getToken();
+//   const data = await result.json();
+//   console.log(data.access_token);
+//   return data.access_token;
+// };
+// getToken();
 
-const getArtist = async (token) => {
-  const name = document.querySelector("#artistName").value;
-  const result = await fetch(
-    `https://api.spotify.com/v1/search?q=${name}&type=artist`,
-    {
-      method: "GET",
-      headers: { Authorization: "Bearer " + token },
-    }
-  );
+// const getArtist = async (token) => {
+//   const name = document.querySelector("#artistName").value;
+//   const result = await fetch(
+//     `https://api.spotify.com/v1/search?q=${name}&type=artist`,
+//     {
+//       method: "GET",
+//       headers: { Authorization: "Bearer " + token },
+//     }
+//   );
 
-  const data = await result.json();
-  console.log(data);
-  return data;
-};
-const token = await getToken();
-getArtist(token);
+//   const data = await result.json();
+//   console.log(data);
+//   return data;
+// };
+// const token = await getToken();
+// getArtist(token);
 
 // var authOptions = {
 //   url: "https://accounts.spotify.com/api/token",
