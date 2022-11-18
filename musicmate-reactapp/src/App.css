@@ -26,6 +26,9 @@ button {
   cursor: pointer;
   text-align: center;
 }
+button:hover {
+  color: black;
+}
 
 a {
   color: inherit;
@@ -94,3 +97,43 @@ img {
 .artistBox .artistInfos {
   padding: 2rem;
 }
+
+/* .topBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: auto;
+  background-color: white;
+} */
+
+/* .topBox input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 36px;
+  background-color: #00ff6e;
+} */
+
+.button1 {
+  border-radius: 8px;
+  outline: none;
+  height: 36px;
+  width: auto;
+  padding: 4px 16px;
+  background-color: #04aa6d;
+  color: white;
+}
+.button2 {
+  border-radius: 8px;
+  outline: none;
+  height: 36px;
+  width: auto;
+  padding: 4px 16px;
+  background-color: #04aa6d;
+  color: white;
+}
+/* .button1:hover {
+  color: black;
+} */

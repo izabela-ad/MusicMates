@@ -233,11 +233,14 @@ const meData = async (token) => {
   const data = await result.json();
   console.log(data);
 };
-const topTracks = async (token) => {
-  const result = await fetch("https://api.spotify.com/v1/me/top/artists", {
-    method: "GET",
-    headers: { Authorization: "Bearer " + token },
-  });
+const getTopArtist = async (token) => {
+  const result = await fetch(
+    "https://api.spotify.com/v1/me/top/artists?limit=50",
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
   if (result.ok && result.status === 200) {
     const data = await result.json();
     console.log(data);
@@ -268,6 +271,52 @@ const topTracks = async (token) => {
     }
   }
 };
+const topTracks = async (token) => {
+  const result = await fetch(
+    "https://api.spotify.com/v1/me/top/tracks?limit=50",
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  if (result.ok && result.status === 200) {
+    const data = await result.json();
+    console.log(data);
+    document.querySelector(".artistBox").innerHTML = "";
+    for (let i = 0; i < data.items.length; i++) {
+      // console.log(i + " " + data.artists.items[i].name);
+      if (data.items[i].album.images.length !== 0) {
+        document.querySelector(".artistBox").innerHTML += `
+          <div>
+          <img src="${data.items[i].album.images[2].url}" alt=${
+          data.items[i].name
+        } />
+        </div>
+        <div class="artistInfo">
+          <h1>${i + 1}. ${data.items[i].name}</h1>
+          <p>${(function artistsOnSong() {
+            let res = "";
+            for (let j = 0; j < data.items[i].artists.length; j++) {
+              res += data.items[i].artists[j].name + ", ";
+            }
+            return res;
+          })()}</p>
+        </div>
+          `;
+      } else {
+        document.querySelector(".artistBox").innerHTML += `
+          <div>
+          <img src="" alt=${data.items[i].name} />
+        </div>
+        <div class="artistInfo">
+          <h1>${i + 1}. ${data.items[i].name}</h1>
+          <p>${data.items[i].artists}</p>
+        </div>
+          `;
+      }
+    }
+  }
+};
 const loadData = async () => {
   //get the token
   const tokenType = localStorage.getItem("accessToken");
@@ -278,12 +327,23 @@ const loadData = async () => {
 
   const artist = await getArtist(tokenType);
   const me = await meData(tokenType);
-  const topTrack = await topTracks(tokenType);
+  // const topTrack = await topTracks(tokenType);
   //populate our genres select element
   // genres.forEach((element) => UICtrl.createGenre(element.name, element.id));
 };
+const topArtistButton = async () => {
+  //get token
+  const tokenType = localStorage.getItem("accessToken");
+  const topArtists = await getTopArtist(tokenType);
+};
+const topTrackButton = async () => {
+  //get token
+  const tokenType = localStorage.getItem("accessToken");
+  const topTrack = await topTracks(tokenType);
+};
 document.querySelector("#search").addEventListener("click", loadData);
-
+document.querySelector(".button1").addEventListener("click", topArtistButton);
+document.querySelector(".button2").addEventListener("click", topTrackButton);
 // })();
 // APIController.init();
 // const token = await getToken();
