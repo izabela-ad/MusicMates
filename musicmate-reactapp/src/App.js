@@ -14,7 +14,7 @@ http://localhost:3000/#access_token=BQCI5nH4zRAWJtOXGmLMnZtgIWoScWSwSYz_eFgolhJW
 */
 // var request = require("request"); // "Request" library
 // const CLIENT_ID = "59759643100f409a9ba8dae7ddbb6a19";
-var client_secret = "4dac1536390440628fc6c8cb9057c1e8"; // Your secret
+var client_secret = ""; // Your secret
 var CLIENT_ID = "1d749561a8d143a996cf153f2f3ed2b2"; // Your client id
 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -39,6 +39,22 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
   return paramsSplitUp;
 };
+request.post(authOptions, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    // use the access token to access the Spotify Web API
+    var token = body.access_token;
+    var options = {
+      url: `https://api.spotify.com/v1/me`,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      json: true,
+    };
+    request.get(options, function (error, response, body) {
+      console.log(body);
+    });
+  }
+});
 const WebApp = () => {
   useEffect(() => {
     if (window.location.hash) {
