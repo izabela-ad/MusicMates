@@ -24,6 +24,7 @@ const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-read-private",
+  "user-top-read",
 ];
 const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
 
@@ -39,22 +40,23 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
   return paramsSplitUp;
 };
-request.post(authOptions, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    // use the access token to access the Spotify Web API
-    var token = body.access_token;
-    var options = {
-      url: `https://api.spotify.com/v1/me`,
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      json: true,
-    };
-    request.get(options, function (error, response, body) {
-      console.log(body);
-    });
-  }
-});
+// request.post(authOptions, function (error, response, body) {
+//   if (!error && response.statusCode === 200) {
+//     // use the access token to access the Spotify Web API
+//     var token = body.access_token;
+//     var options = {
+//       url: `https://api.spotify.com/v1/me`,
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//       json: true,
+//     };
+//     request.get(options, function (error, response, body) {
+//       console.log(body);
+//     });
+//   }
+// });
+
 const WebApp = () => {
   useEffect(() => {
     if (window.location.hash) {
@@ -80,6 +82,7 @@ const WebApp = () => {
     </div>
   );
 };
+
 export default WebApp;
 // const APIController = (function () {
 const getToken = async () => {
@@ -222,12 +225,60 @@ const getArtist = async (token) => {
 };
 // getArtist(getToken());
 // document.querySelector("#search").addEventListener("click", getArtist);
-
+const meData = async (token) => {
+  const result = await fetch("https://api.spotify.com/v1/me", {
+    method: "GET",
+    headers: { Authorization: "Bearer " + token },
+  });
+  const data = await result.json();
+  console.log(data);
+};
+const topTracks = async (token) => {
+  const result = await fetch("https://api.spotify.com/v1/me/top/artists", {
+    method: "GET",
+    headers: { Authorization: "Bearer " + token },
+  });
+  if (result.ok && result.status === 200) {
+    const data = await result.json();
+    console.log(data);
+    document.querySelector(".artistBox").innerHTML = "";
+    for (let i = 0; i < data.items.length; i++) {
+      // console.log(i + " " + data.artists.items[i].name);
+      if (data.items[i].images.length !== 0) {
+        document.querySelector(".artistBox").innerHTML += `
+          <div>
+          <img src="${data.items[i].images[2].url}" alt=${data.items[0].name} />
+        </div>
+        <div class="artistInfo">
+          <h1>${i + 1}. ${data.items[i].name}</h1>
+          <p>${data.items[i].genres}</p>
+        </div>
+          `;
+      } else {
+        document.querySelector(".artistBox").innerHTML += `
+          <div>
+          <img src="" alt=${data.items[0].name} />
+        </div>
+        <div class="artistInfo">
+          <h1>${i + 1}. ${data.items[i].name}</h1>
+          <p>${data.items[i].genres}</p>
+        </div>
+          `;
+      }
+    }
+  }
+};
 const loadData = async () => {
   //get the token
-  const token = await getToken();
+  const tokenType = localStorage.getItem("accessToken");
+  console.log("MY print: " + tokenType);
+  // const token = await getToken();
+  // console.log("SECOND PRINT: " + token);
   //get the genres
-  const artist = await getArtist(token);
+
+  const artist = await getArtist(tokenType);
+  const me = await meData(tokenType);
+  const topTrack = await topTracks(tokenType);
   //populate our genres select element
   // genres.forEach((element) => UICtrl.createGenre(element.name, element.id));
 };
