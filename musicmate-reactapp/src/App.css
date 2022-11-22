@@ -92,6 +92,7 @@ img {
 .artistBox p {
   text-align: center;
   margin-top: 1rem;
+  font-family: "Luminari", "Blippo", fantasy;
 }
 
 .artistBox .artistInfos {
