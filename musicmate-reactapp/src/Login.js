@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-var client_secret = "4bee38dffab14a208a96c957724778e0"; // Your secret
+var client_secret = ""; // Your secret
 var CLIENT_ID = "1d749561a8d143a996cf153f2f3ed2b2"; // Your client id
 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
