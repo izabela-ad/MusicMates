@@ -158,6 +158,15 @@ img {
 /* .button1:hover {
   color: black;
 } */
+[data-tab-content] {
+  display: none;
+}
+.active[data-tab-content] {
+  display: block;
+}
+.tab.active {
+  background-color: black;
+}
 body {
   background: #2c3e50;
   color: #ecf0f1;
@@ -170,9 +179,9 @@ body {
 }
 .tabs {
   position: relative;
-  margin: 3rem 0;
-  background: #1abc9c;
-  height: 14.75rem;
+  /* margin: 3rem 0; */
+  /* background: #1a35bc; */
+  /* height: 14.75rem; */
 }
 .tabs::before,
 .tabs::after {
@@ -188,20 +197,20 @@ body {
 .tab-switch {
   display: none;
 }
-.tab-label {
+.tab {
   position: relative;
   display: block;
   line-height: 2.75em;
   height: 3em;
   padding: 0 1.618em;
-  background: #1abc9c;
+  background: #1a1fbc;
   border-right: 0.125rem solid #16a085;
   color: #fff;
   cursor: pointer;
   top: 0;
   transition: all 0.25s;
 }
-.tab-label:hover {
+.tab:hover {
   top: -0.25rem;
   transition: top 0.25s;
 }
@@ -209,16 +218,16 @@ body {
   height: 12rem;
   position: absolute;
   z-index: 1;
-  top: 2.75em;
-  left: 0;
+  /* top: 2.75em;
+  left: 0; */
   padding: 1.618rem;
-  background: #fff;
-  color: #2c3e50;
-  border-bottom: 0.25rem solid #bdc3c7;
-  opacity: 0;
+  /* background: #fff; */
+  color: #0e7ceb;
+  /* border-bottom: 0.25rem solid #bdc3c7; */
+  opacity: 1;
   transition: all 0.35s;
 }
-.tab-switch:checked + .tab-label {
+.active + .tab-label {
   background: #fff;
   color: #2c3e50;
   border-bottom: 0;
@@ -231,4 +240,64 @@ body {
   z-index: 2;
   opacity: 1;
   transition: all 0.35s;
+}
+.switchpage {
+  font-size: 12px;
+  background: none;
+  color: black;
+  text-decoration: underline;
+}
+.UserRegister {
+  justify-content: center;
+  color: black;
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  background-image: linear-gradient(79deg, #80ff72, #7ee8fa);
+}
+.auth-form-container,
+.login-form,
+.register-form {
+  justify-content: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+  box-sizing: content-box;
+}
+#submit {
+  border: none;
+  color: #000;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+/* #fname,
+#lname,
+#password {
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+} */
+label {
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+}
+input {
+  color: black;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+p {
+  color: red;
+  background-color: transparent;
+}
+#different {
+  padding: 0px 0 50px;
+  background-color: transparent;
+  width: 100%;
 }

@@ -1,6 +1,6 @@
 import "./App.css";
 //newly added
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import Login from "./Login";
@@ -178,14 +178,97 @@ function APICalls() {
   // document.querySelector(".button1").addEventListener("click", topArtistButton);
   // document.querySelector(".button2").addEventListener("click", topTrackButton);
   const [loggedOut, setLog] = useState(false);
-  const defaultTime = "medium_term";
+  function print() {
+    console.log("DOM LOADING");
+  }
+  document.addEventListener("DOMContentLoaded", print);
+  const tabs = document.querySelectorAll("[data-tab-target]");
+  const tabContents = document.querySelectorAll("[data-tab-content]");
+  console.log(tabs);
+  tabs.forEach(async (tab) => {
+    console.log("executes");
+
+    tab.addEventListener("click", () => {
+      const target = document.querySelector(tab.dataset.tabTarget);
+
+      tabContents.forEach((tabContent) => {
+        tabContent.classList.remove("active");
+      });
+      tabs.forEach((tab) => {
+        tab.classList.remove("active");
+      });
+      document.querySelector(".artistBox").innerHTML = "";
+      console.log("working");
+      tab.classList.add("active");
+      target.classList.add("active");
+    });
+  });
 
   return loggedOut ? (
+    // <Link to="/login">loginnnn</Link>
     <Login />
   ) : (
     <div className="container">
       <div class="welcome"></div>
-      <div class="tab">
+      <ul class="tabs">
+        <li data-tab-target="#search" class="active tab">
+          Search
+        </li>
+        <li data-tab-target="#topArtists" class="tab">
+          Top Artists
+        </li>
+        <li data-tab-target="#topTracks" class="tab">
+          Top Tracks
+        </li>
+        <li
+          input
+          type="button"
+          data-tab-target="#logout"
+          class="tab"
+          onClick={() => setLog(true)}
+        >
+          Log out
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="search" data-tab-content class="active">
+          <div class="searchBox">
+            <input id="artistName" type="text" placeholder="Artist Name" />
+            <button id="search" onClick={loadData}>
+              🔎
+            </button>
+          </div>
+        </div>
+        <div id="topArtists" data-tab-content>
+          <button class="button1" onClick={() => topArtistButton("short_term")}>
+            4 weeks
+          </button>
+          <button
+            class="button1"
+            onClick={() => topArtistButton("medium_term")}
+          >
+            6 months
+          </button>
+          <button class="button1" onClick={() => topArtistButton("long_term")}>
+            All-Time
+          </button>
+        </div>
+        <div id="topTracks" data-tab-content>
+          <button class="button1" onClick={() => topTrackButton("short_term")}>
+            4 weeks
+          </button>
+          <button class="button1" onClick={() => topTrackButton("medium_term")}>
+            6 months
+          </button>
+          <button class="button1" onClick={() => topTrackButton("long_term")}>
+            All-Time
+          </button>
+        </div>
+        <div id="logout" data-tab-content>
+          <input type="button" />
+        </div>
+      </div>
+      {/* <div class="tab">
         <input
           type="radio"
           name="css-tabs"
@@ -196,12 +279,13 @@ function APICalls() {
         <label htmlFor="tab-1" class="tab-label">
           Search
         </label>
-
-        <div class="searchBox">
-          <input id="artistName" type="text" placeholder="Artist Name" />
-          <button id="search" onClick={loadData}>
-            🔎
-          </button>
+        <div class="tab-content">
+          <div class="searchBox">
+            <input id="artistName" type="text" placeholder="Artist Name" />
+            <button id="search" onClick={loadData}>
+              🔎
+            </button>
+          </div>
         </div>
       </div>
       <div class="tab">
@@ -213,7 +297,7 @@ function APICalls() {
           class="tab-switch"
           // onClick={() => topArtistButton(defaultTime)}
         />
-        <div>
+        <div class="tab-content">
           <button class="button1" onClick={() => topArtistButton("short_term")}>
             4 weeks
           </button>
@@ -230,9 +314,7 @@ function APICalls() {
         <label htmlFor="tab-2" class="tab-label">
           Top Artists
         </label>
-        {/* <button class="button1" onClick={topArtistButton}>
-          Top Artists
-        </button> */}
+        
       </div>
       <div class="tab">
         <input
@@ -242,7 +324,7 @@ function APICalls() {
           class="tab-switch"
           // onClick={() => topTrackButton(defaultTime)}
         />
-        <div>
+        <div class="tab-content">
           <button class="button1" onClick={() => topTrackButton("short_term")}>
             4 weeks
           </button>
@@ -256,7 +338,7 @@ function APICalls() {
         <label htmlFor="tab-3" class="tab-label">
           Top Tracks
         </label>
-        {/* <button class="button2">Top Tracks</button> */}
+        
       </div>
       <div class="tab">
         <input
@@ -269,9 +351,13 @@ function APICalls() {
         <label htmlFor="tab-4" class="tab-label">
           Logout
         </label>
-        {/* <button class="button2">Top Tracks</button> */}
-      </div>
-
+        
+      </div> */}
+      {/* <button class="button2">Top Tracks</button> */}
+      {/* <button class="button2">Top Tracks</button> */}
+      {/* <button class="button1" onClick={topArtistButton}>
+          Top Artists
+        </button> */}
       <div className="container">
         {/* <button class="logout" onClick={() => setLog(true)}>
           Logout
@@ -280,6 +366,7 @@ function APICalls() {
 
       <div class="topBox"></div>
       <div class="artistBox"></div>
+      <script src="APICalls.js" defer></script>
     </div>
   );
 }

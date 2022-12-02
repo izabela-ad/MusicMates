@@ -4,15 +4,18 @@ import "./index.css";
 import App from "./App";
 import Login from "./Login";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route, renderMatches } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import APICalls from "./APICalls";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Link to="/"></Link>
       <Routes>
-        <Route index element={<App />} />
+        <Route path="/" element={<App />} />
         <Route path="login" element={<Login />} />
+        <Route path="home" element={<APICalls />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

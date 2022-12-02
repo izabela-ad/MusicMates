@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 var client_secret = ""; // Your secret
 var CLIENT_ID = "1d749561a8d143a996cf153f2f3ed2b2"; // Your client id
@@ -59,7 +59,6 @@ const Login = (props) => {
     }
   });
   const handleLogin = () => {
-    navigate("/app");
     window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
 
     // "${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_url=${REDIRECT_URL_AFTER_LOGIN}&response_type=token&show_dialog=true";
@@ -72,6 +71,7 @@ const Login = (props) => {
       {/* <img src={require("./musicmate.jpg")} /> */}
       {/*  */}
       <button onClick={handleLogin}>Login into Spotify</button>
+      {/* <Link to="/home" /> */}
     </div>
   );
 };
