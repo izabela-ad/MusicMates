@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./App.css";
 
 var client_secret = ""; // Your secret
 var CLIENT_ID = ""; // Your client id here!
@@ -49,6 +50,7 @@ const Login = (props) => {
   return (
     <div className="container">
       <button onClick={handleLogin}>Login into Spotify</button>
+      <h3 class="animate-charcter"> MUSICMATE</h3>
     </div>
   );
 };
