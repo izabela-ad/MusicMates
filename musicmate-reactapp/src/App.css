@@ -15,7 +15,6 @@ button {
 }
 
 button {
-  /* cursor: pointer; */
   display: block;
   width: 100%;
   border: none;
@@ -37,10 +36,7 @@ a {
   cursor: pointer;
 }
 h1 {
-  /* position: absolute; */
   text-align: center;
-  /* top: 10px;
-  right: 20px; */
 }
 main {
   width: 80%;
@@ -71,7 +67,8 @@ img {
   color: #000;
 }
 .welcome {
-  display: block;
+  display: flex;
+  flex-direction: row;
   width: 100%;
   border: none;
   background-color: #04aa6d;
@@ -91,7 +88,6 @@ img {
 }
 
 .artistBox {
-  /* display: flex; */
   margin-top: 2rem;
   justify-content: center;
 }
@@ -103,30 +99,12 @@ img {
 .artistBox p {
   text-align: center;
   margin-top: 1rem;
-  font-family: "Luminari", "Blippo", fantasy;
+  color: white;
 }
 
 .artistBox .artistInfos {
   padding: 2rem;
 }
-
-/* .topBox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 36px;
-  width: auto;
-  background-color: white;
-} */
-
-/* .topBox input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  height: 36px;
-  background-color: #00ff6e;
-} */
 
 .button1 {
   border-radius: 8px;
@@ -155,9 +133,7 @@ img {
   background-color: #04aa6d;
   color: white;
 }
-/* .button1:hover {
-  color: black;
-} */
+
 [data-tab-content] {
   display: none;
 }
@@ -179,9 +155,6 @@ body {
 }
 .tabs {
   position: relative;
-  /* margin: 3rem 0; */
-  /* background: #1a35bc; */
-  /* height: 14.75rem; */
 }
 .tabs::before,
 .tabs::after {
@@ -218,12 +191,8 @@ body {
   height: 12rem;
   position: absolute;
   z-index: 1;
-  /* top: 2.75em;
-  left: 0; */
   padding: 1.618rem;
-  /* background: #fff; */
   color: #0e7ceb;
-  /* border-bottom: 0.25rem solid #bdc3c7; */
   opacity: 1;
   transition: all 0.35s;
 }
@@ -274,13 +243,6 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
-/* #fname,
-#lname,
-#password {
-  color: black;
-  background-color: white;
-  border-radius: 10px;
-} */
 label {
   background-color: transparent;
   width: 100%;

@@ -1,24 +1,12 @@
 import "./App.css";
-//newly added
-import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { Buffer } from "buffer";
-import Login from "./Login";
 import APICalls from "./APICalls";
-//import "./webapp.css";
 
 export const UserProfile = (props) => {
-  //   async function storeData() {
-
   const [username, setUser] = useState("");
   const [password, setPass] = useState("");
   const [incorr, setInc] = useState("");
   const [loggedIn, setLogin] = useState(false);
-  // document.querySelector("#fname").value;
-  // const password = document.querySelector("#lname").value;
-  // console.log(username);
-  // console.log(password);
-  //   }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
