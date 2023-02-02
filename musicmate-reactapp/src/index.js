@@ -6,16 +6,21 @@ import Login from "./Login";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import APICalls from "./APICalls";
+import UserProfile from "./UserProfile";
+import UserRegister from "./UserRegister";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Link to="/"></Link>
+      <App />
+      {/* <Link to="/"></Link> */}
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="home" element={<APICalls />} />
+        <Route path="/*" element={<App />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<APICalls />} />
+        <Route path="/signin" element={<UserProfile />} />
+        <Route path="/register" element={<UserRegister />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

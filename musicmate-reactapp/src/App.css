@@ -88,8 +88,14 @@ img {
 }
 
 .artistBox {
-  margin-top: 2rem;
-  justify-content: center;
+  /* margin-top: 200px;
+  justify-content: center; 
+  height: 2000px;
+  width: 100%; */
+  /* display: flex; */
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: 70px;
 }
 
 .artistBox img {
@@ -102,10 +108,24 @@ img {
   color: white;
 }
 
-.artistBox .artistInfos {
-  padding: 2rem;
+.artistBox .artistInfo {
+  /* padding: 1rem; */
+  /* height: 100px; */
+  width: 200px;
 }
+.resultBox {
+  /* display: flex; */
+  /* flex: 1; */
+  float: left;
+  width: 200px;
+  padding: 10px;
+  margin: 20px;
+  height: 350px;
 
+  /* justify-content: space-between; */
+  /* margin-left: 0px;
+  margin-right: 0px; */
+}
 .button1 {
   border-radius: 8px;
   outline: none;
@@ -262,6 +282,21 @@ p {
   padding: 0px 0 50px;
   background-color: transparent;
   width: 100%;
+}
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #04aa6d;
+  color: #fff;
 }
 
 .animate-charcter {

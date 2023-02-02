@@ -2,6 +2,7 @@ import "./App.css";
 //newly added
 import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Buffer } from "buffer";
 import Login from "./Login";
 import UserProfile from "./UserProfile";
@@ -14,6 +15,11 @@ export const UserRegister = (props) => {
   const [password, setPass] = useState("");
   const [password2, setPass2] = useState("");
   const [register, setReg] = useState("");
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/signin");
+  };
   // document.querySelector("#fname").value;
   // const password = document.querySelector("#lname").value;
   // console.log(username);
@@ -27,7 +33,8 @@ export const UserRegister = (props) => {
       setReg("");
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);
-      props.onFormSwitch("login");
+      // props.onFormSwitch("login");
+      handleClick();
     }
     console.log(username);
     console.log(password);
@@ -38,7 +45,7 @@ export const UserRegister = (props) => {
       <div className="auth-form-container">
         <h1 id="different">Sign up!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
-          <label for="fname">Username:</label>
+          <label htmlFor="fname">Username:</label>
           <input
             value={username}
             onChange={(e) => setUser(e.target.value)}
@@ -46,7 +53,7 @@ export const UserRegister = (props) => {
             id="fname"
             name="fname"
           ></input>
-          <label for="lname">Password:</label>
+          <label htmlFor="lname">Password:</label>
           <input
             value={password}
             onChange={(e) => setPass(e.target.value)}
@@ -54,7 +61,7 @@ export const UserRegister = (props) => {
             id="lname"
             name="lname"
           ></input>
-          <label for="lname">Repeat Password:</label>
+          <label htmlFor="lname">Repeat Password:</label>
           <input
             value={password2}
             onChange={(e) => setPass2(e.target.value)}
@@ -67,7 +74,8 @@ export const UserRegister = (props) => {
         </form>{" "}
         <button
           className="switchpage"
-          onClick={() => props.onFormSwitch("login")}
+          onClick={handleClick}
+          // onClick={() => props.onFormSwitch("login")}
         >
           Already have an Account? Login here
         </button>

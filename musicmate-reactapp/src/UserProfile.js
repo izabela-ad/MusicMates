@@ -1,12 +1,21 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import APICalls from "./APICalls";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfile = (props) => {
   const [username, setUser] = useState("");
   const [password, setPass] = useState("");
   const [incorr, setInc] = useState("");
   const [loggedIn, setLogin] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/register");
+  };
+  const handleClickHome = () => {
+    navigate("/home");
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -16,7 +25,8 @@ export const UserProfile = (props) => {
       setInc("");
       setLogin(true);
       console.log("LOGGED IN!");
-      return <APICalls />;
+      // return <APICalls />;
+      handleClickHome();
     } else {
       setInc("Incorrect Username or password");
     }
@@ -30,7 +40,7 @@ export const UserProfile = (props) => {
       <div className="auth-form-container">
         <h1 id="different">Next, sign into MusicMates!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
-          <label for="fname">Username:</label>
+          <label htmlFor="fname">Username:</label>
           <input
             value={username}
             onChange={(e) => setUser(e.target.value)}
@@ -38,7 +48,7 @@ export const UserProfile = (props) => {
             id="fname"
             name="fname"
           ></input>
-          <label for="lname">Password:</label>
+          <label htmlFor="lname">Password:</label>
           <input
             value={password}
             onChange={(e) => setPass(e.target.value)}
@@ -51,7 +61,8 @@ export const UserProfile = (props) => {
         </form>{" "}
         <button
           className="switchpage"
-          onClick={() => props.onFormSwitch("register")}
+          onClick={handleClick}
+          // onClick={() => props.onFormSwitch("register")}
         >
           Don't have an account? Register here
         </button>
