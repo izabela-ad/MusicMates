@@ -45,6 +45,9 @@ const Login = (props) => {
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("tokenType", token_type);
       localStorage.setItem("expiresIn", expires_in);
+      // console.log(access_token);
+      // console.log(token_type);
+      // console.log(expires_in);
       handleClick();
     }
   });
@@ -54,7 +57,9 @@ const Login = (props) => {
 
   return (
     <div className="container">
-      <button onClick={handleLogin}>Login into Spotify</button>
+      <button className="spotify" onClick={handleLogin}>
+        Login into Spotify
+      </button>
       <h3 className="animate-charcter"> MUSICMATE</h3>
     </div>
   );

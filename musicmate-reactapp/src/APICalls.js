@@ -272,7 +272,7 @@ function APICalls() {
         <div id="search" data-tab-content className="active">
           <div className="searchBox">
             <input id="artistName" type="text" placeholder="Artist Name" />
-            <button id="search" onClick={loadData}>
+            <button className="search" onClick={loadData}>
               🔎
             </button>
           </div>

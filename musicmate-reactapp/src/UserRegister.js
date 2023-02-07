@@ -43,7 +43,7 @@ export const UserRegister = (props) => {
   return (
     <div className="UserRegister">
       <div className="auth-form-container">
-        <h1 id="different">Sign up!</h1>
+        <h1 className="different">Sign up!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="fname">Username:</label>
           <input
@@ -69,8 +69,8 @@ export const UserRegister = (props) => {
             id="lname"
             name="lname"
           ></input>
-          <p>{register}</p>
-          <input type="submit" id="submit" value="Register"></input>
+          <p className="redtext">{register}</p>
+          <input type="submit" className="formButton" value="Register"></input>
         </form>{" "}
         <button
           className="switchpage"
