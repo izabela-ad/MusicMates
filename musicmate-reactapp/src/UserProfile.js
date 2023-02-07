@@ -79,8 +79,13 @@ export const UserProfile = (props) => {
     <APICalls />
   ) : (
     <div className="UserRegister">
+      <img
+        className="musicmatelogo"
+        src="../musicmatecropped.png"
+        alt="MusicMate"
+      />
       <div className="auth-form-container">
-        <h1 className="different">Next, sign into MusicMates!</h1>
+        <h1 className="different">Next, sign into MusicMate!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="fname">Username:</label>
           <input

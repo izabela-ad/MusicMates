@@ -300,7 +300,22 @@ img {
   min-height: 100vh;
   background-image: linear-gradient(79deg, #80ff72, #7ee8fa);
 }
-.auth-form-container,
+.auth-form-container {
+  position: absolute;
+  background-color: #eeeaea;
+  justify-content: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 25px;
+  width: 400px;
+  height: 600px;
+  top: 10%;
+  left: 20%;
+  /* background-color: transparent; */
+  box-sizing: content-box;
+}
 .login-form,
 .register-form {
   justify-content: center;
@@ -336,11 +351,19 @@ p {
 .redtext {
   color: red;
 }
+.musicmatelogo {
+  position: absolute;
+  right: 15%;
+  display: flex;
+  float: right;
+  width: 500px;
+  top: 15%;
+}
 .different {
   padding: 0px 0 50px;
   color: black;
   background-color: transparent;
-  width: 100%;
+  width: 90%;
 }
 #mydiv {
   position: absolute;
