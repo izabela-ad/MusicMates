@@ -74,9 +74,9 @@ function APICalls() {
       for (let i = 0; i < data.artists.items.length; i++) {
         if (data.artists.items[i].images.length !== 0) {
           document.querySelector(".artistBox").innerHTML += `
-            <div className="resultBox">
+            <div class="resultBox">
             <img src="${data.artists.items[i].images[0].url}" alt=${data.artists.items[0].name} />
-            <div className="artistInfo">
+            <div class="artistInfo">
             <h1>${data.artists.items[i].name}</h1>
             <p>${data.artists.items[i].genres}</p>
           </div>
@@ -85,9 +85,9 @@ function APICalls() {
             `;
         } else {
           document.querySelector(".artistBox").innerHTML += `
-            <div className="resultBox">
+            <div class="resultBox">
             <img src="" alt=${data.artists.items[0].name} />
-            <div className="artistInfo">
+            <div class="artistInfo">
             <h1>${data.artists.items[i].name}</h1>
             <p>${data.artists.items[i].genres}</p>
           </div>
@@ -107,7 +107,7 @@ function APICalls() {
     document.querySelector(
       ".welcome"
     ).innerHTML = `Welcome,  ${data.display_name}!
-    <img src ="${data.images[0].url}" style="width:50px;height:auto;float:left">`;
+    <img src ="${data.images[0].url}" id="homePhoto" >`;
     console.log(data);
     console.log(data.images[0].url);
   };
@@ -126,9 +126,9 @@ function APICalls() {
       for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].images.length !== 0) {
           document.querySelector(".artistBox").innerHTML += `
-          <div className="resultBox">
+          <div class="resultBox">
           <img src="${data.items[i].images[0].url}" alt=${data.items[0].name} />
-          <div className="artistInfo">
+          <div class="artistInfo">
           <h1>${i + 1}. ${data.items[i].name}</h1>
           <p>${data.items[i].genres}</p>
         </div>
@@ -137,9 +137,9 @@ function APICalls() {
           `;
         } else {
           document.querySelector(".artistBox").innerHTML += `
-          <div className="resultBox">
+          <div class="resultBox">
           <img src="" alt=${data.items[0].name} />
-          <div className="artistInfo">
+          <div class="artistInfo">
           <h1>${i + 1}. ${data.items[i].name}</h1>
           <p>${data.items[i].genres}</p>
         </div>
@@ -165,11 +165,11 @@ function APICalls() {
       for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].album.images.length !== 0) {
           document.querySelector(".artistBox").innerHTML += `
-          <div className="resultBox">
+          <div class="resultBox">
           <img src="${data.items[i].album.images[0].url}" alt=${
             data.items[i].name
           } />
-          <div className="artistInfo">
+          <div class="artistInfo">
           <h1>${i + 1}. ${data.items[i].name}</h1>
           <p>${(function artistsOnSong() {
             let res = "" + data.items[i].artists[0].name;
@@ -184,9 +184,9 @@ function APICalls() {
           `;
         } else {
           document.querySelector(".artistBox").innerHTML += `
-          <div className="resultBox">
+          <div class="resultBox">
           <img src="" alt=${data.items[i].name} />
-          <div className="artistInfo">
+          <div class="artistInfo">
           <h1>${i + 1}. ${data.items[i].name}</h1>
           <p>${data.items[i].artists}</p>
         </div>

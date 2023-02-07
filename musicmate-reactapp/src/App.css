@@ -70,6 +70,8 @@ img {
   color: #000;
 }
 .welcome {
+  /* position: absolute;
+  margin: 77px; */
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -79,6 +81,20 @@ img {
   padding: 14px 28px;
   font-size: 30px;
   text-align: center;
+}
+#homePhoto {
+  position: absolute;
+  width: 50px;
+  /* height: auto;
+  display: flex; */
+  /* float: right; */
+  margin: 0px;
+  /* margin-bottom: 10px;
+  padding-bottom: 10px; */
+  /* left: 150px; */
+  /* justify-content: right; */
+  top: 8px;
+  right: 50px;
 }
 
 .search {
@@ -101,7 +117,7 @@ img {
   width: 100%; */
   /* display: flex; */
   text-align: center;
-  margin-top: 150px;
+  margin-top: 100px;
   margin-bottom: 70px;
 }
 
@@ -242,7 +258,7 @@ img {
   transition: top 0.25s;
 }
 .tab-content {
-  height: 12rem;
+  /* height: 12rem; */
   position: absolute;
   z-index: 1;
   padding: 1.618rem;
