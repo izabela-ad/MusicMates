@@ -237,12 +237,12 @@ function APICalls() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return loggedOut ? (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
     </Routes>
   ) : (
     // <Login />

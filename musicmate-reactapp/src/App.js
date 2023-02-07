@@ -4,7 +4,7 @@ import Login from "./Login";
 import UserProfile from "./UserProfile";
 import UserRegister from "./UserRegister";
 import APICalls from "./APICalls";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Navigate } from "react-router";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -20,18 +20,34 @@ function App() {
     setCurrentForm(formName);
   };
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const handleLoad1 = () => {
+    navigate("/login");
+  };
   const handleClick = () => {
     navigate("/register");
   };
   const handleClick2 = () => {
     navigate("/signin");
   };
-  // console.log(token);
+  console.log(location.pathname);
+  function handleLogin() {
+    // if ((location.pathname = "\\")) {
+    handleLoad1();
+    // }
+  }
+
+  useEffect(() => {
+    if ((location.pathname = "\\")) {
+      handleLoad1();
+    }
+  }, []);
+
   // console.log(currentForm);
   return !token ? (
     <Login />
-  ) : // <Routes>
+  ) : // window.addEventListener("load", () => handleLogin())
+  // <Routes>
   //   <Route path="/login" element={<Login />} />
   //   <Route
   //     path="/signin"
