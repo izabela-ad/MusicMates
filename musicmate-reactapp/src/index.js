@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import APICalls from "./APICalls";
 import UserProfile from "./UserProfile";
 import UserRegister from "./UserRegister";
+import Chat from "./Chat";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
         <Route path="/home" element={<APICalls />} />
         <Route path="/signin" element={<UserProfile />} />
         <Route path="/register" element={<UserRegister />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
