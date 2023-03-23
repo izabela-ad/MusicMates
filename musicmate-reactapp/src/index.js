@@ -28,6 +28,32 @@ root.render(
   </BrowserRouter>
 );
 
+
+
+//Creating a navigation bar
+const Navigation = () => {
+  return (
+    <>
+      <Nav>
+        <NavMenu>
+          <NavLink to="/profilepage" activeStyle>
+            MyProfile
+          </NavLink>
+
+          <NavLink to="/feed" activeStyle>
+            MyFriends
+          </NavLink>
+
+        </NavMenu>
+      </Nav>
+    </>
+  )
+}
+
+//Styling the navigation bar
+
+
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
