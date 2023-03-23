@@ -4,6 +4,7 @@ import Login from "./Login";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
+// import(RegExp);
 
 function APICalls() {
   $(document).ready(() => dragElement(document.getElementById("mydiv")));
@@ -57,6 +58,16 @@ function APICalls() {
       document.onmousemove = null;
     }
   }
+  function animateDivs() {
+    $(document).ready(function ($) {
+      (function fadeNext(collection) {
+        // console.log("exe");
+        collection.eq(0).fadeIn(300, function () {
+          (collection = collection.slice(1)).length && fadeNext(collection);
+        });
+      })($(".resultBox"));
+    });
+  }
   const getArtist = async (token) => {
     const name = document.querySelector("#artistName").value;
     const result = await fetch(
@@ -96,6 +107,7 @@ function APICalls() {
             `;
         }
       }
+      animateDivs();
     }
   };
   const meData = async (token) => {
@@ -148,6 +160,7 @@ function APICalls() {
           `;
         }
       }
+      animateDivs();
     }
   };
   const topTracks = async (token, time_range) => {
@@ -195,11 +208,93 @@ function APICalls() {
           `;
         }
       }
+      animateDivs();
     }
   };
+  const seeGenres = async (token) => {
+    const result = await fetch(
+      `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
+    if (result.ok && result.status === 200) {
+      const data = await result.json();
+      console.log(data);
+    }
+  };
+  const tempGenres = async (token) => {
+    const result = await fetch(
+      `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
+    if (result.ok && result.status === 200) {
+      const data = await result.json();
+      console.log(data);
+      var genreCount = {};
+      // const rapRegex = /(rap|hip hop)/;
+      // const altRegex = /(alternative)/;
+      for (let i = 0; i < data.items.length; i++) {
+        for (let j = 0; j < data.items[i].genres.length; j++) {
+          // if (
+          //   rapRegex.test(data.items[i].genres[j]) ||
+          //   altRegex.test(data.items[i].genres[j])
+          // ) {
+          //   if ("Alternative" in genreCount) {
+          //     genreCount["Alternative"] += 1 / data.items[i].genres.length;
+          //   } else {
+          //     genreCount["Alternative"] = 1 / data.items[i].genres.length;
+          //     // genreCount[data.items[i].genres[j]] += 1;
+          //   }
+          //   if ("Rap/Hip Hop" in genreCount) {
+          //     genreCount["Rap/Hip Hop"] += 1 / data.items[i].genres.length;
+          //   } else {
+          //     genreCount["Rap/Hip Hop"] = 1 / data.items[i].genres.length;
+          //     // genreCount[data.items[i].genres[j]] += 1;
+          //   }
+          if (data.items[i].genres[j] in genreCount) {
+            genreCount[data.items[i].genres[j]] +=
+              (50 - i) * (1 / data.items[i].genres.length);
+          } else {
+            genreCount[data.items[i].genres[j]] =
+              (50 - i) * (1 / data.items[i].genres.length);
+          }
+        }
+      }
+      console.log(genreCount);
+      var items = Object.keys(genreCount).map(function (key) {
+        return [key, genreCount[key]];
+      });
+      items.sort(function (first, second) {
+        return second[1] - first[1];
+      });
+      items = items.slice(0, 10);
+      var count = 0;
+      for (let k = 0; k < items.length; k++) {
+        count += items[k][1];
+      }
+      for (let l = 0; l < items.length; l++) {
+        document.querySelector(".artistBox").innerHTML += `
+          <p>
+          ${items[l][0]}, ${Math.round((items[l][1] / count) * 10000) / 100}%
+        </p></br>`;
+      }
+    }
+  };
+
   const tokenType = localStorage.getItem("accessToken");
   const loadData = async () => {
     const artist = await getArtist(tokenType);
+  };
+  const loadGenre = async () => {
+    const genres = await seeGenres(tokenType);
+  };
+  const loadGenres = async () => {
+    const genres2 = await tempGenres(tokenType);
   };
   const welcome = async () => {
     const me = await meData(tokenType);
@@ -226,7 +321,7 @@ function APICalls() {
           tab.classList.remove("active");
         });
         document.querySelector(".artistBox").innerHTML = "";
-        console.log("executes");
+        // console.log("executes");
         tab.classList.add("active");
         target.classList.add("active");
       });
@@ -258,6 +353,18 @@ function APICalls() {
         <li data-tab-target="#topTracks" className="tab">
           Top Tracks
         </li>
+        {/* <li data-tab-target="#topGenres" className="tab">
+          Top Genres
+        </li> */}
+        <li
+          input
+          type="button"
+          data-tab-target="#somethingelse"
+          className="tab"
+          onClick={() => loadGenres()}
+        >
+          Top Genres
+        </li>
         <li
           input
           type="button"
@@ -278,6 +385,9 @@ function APICalls() {
           </div>
         </div>
         <div id="topArtists" data-tab-content>
+          {/* <button className="buttonelse" onClick={() => loadGenres()}>
+            genres
+          </button> */}
           <button
             className="button1"
             onClick={() => topArtistButton("short_term")}
@@ -316,6 +426,9 @@ function APICalls() {
           >
             All-Time
           </button>
+        </div>
+        <div id="somethingelse" data-tab-content>
+          {/* <input type="button" /> */}
         </div>
         <div id="logout" data-tab-content>
           <input type="button" />

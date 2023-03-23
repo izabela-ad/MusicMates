@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 var client_secret = ""; // Your secret
-var CLIENT_ID = "1d749561a8d143a996cf153f2f3ed2b2"; // Your client id here!
+var CLIENT_ID = ""; // Your client id here!
 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/";

@@ -137,8 +137,9 @@ img {
   width: 200px;
 }
 .resultBox {
-  /* display: flex; */
+  display: none;
   /* flex: 1; */
+  animation: fadeIn 0.3s;
   float: left;
   width: 200px;
   padding: 10px;
@@ -148,6 +149,14 @@ img {
   /* justify-content: space-between; */
   /* margin-left: 0px;
   margin-right: 0px; */
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .button1 {
   border-radius: 8px;
