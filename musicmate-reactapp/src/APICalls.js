@@ -285,8 +285,8 @@ function APICalls() {
       }
     }
   };
-
-  const tokenType = localStorage.getItem("accessToken");
+  console.log("access_token: " + localStorage.getItem("access-token"));
+  const tokenType = localStorage.getItem("access-token");
   const loadData = async () => {
     const artist = await getArtist(tokenType);
   };
@@ -368,6 +368,7 @@ function APICalls() {
         <li
           input
           type="button"
+          id="logout"
           data-tab-target="#logout"
           className="tab"
           onClick={handleClick}

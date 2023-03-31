@@ -182,7 +182,8 @@ img {
   background-color: #04aa6d;
   color: white;
 }
-.logout {
+#logout {
+  position: absolute;
   border-radius: 8px;
   outline: none;
   height: 36px;
@@ -190,6 +191,13 @@ img {
   padding: 4px 16px;
   background-color: #04aa6d;
   color: white;
+  margin: 0px;
+  top: 8px;
+  right: 50px;
+}
+#logout:hover {
+  top: -0.25rem;
+  transition: top 0.25s;
 }
 .formButton {
   border: none;
