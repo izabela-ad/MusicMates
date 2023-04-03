@@ -15,19 +15,60 @@ select
 p {
   margin: 5px;
 }
-
-.spotify {
-  display: block;
-  width: 100%;
-  border: none;
-  background-color: #04aa6d;
-  color: white;
-  padding: 14px 28px;
-  font-size: 30px;
-  cursor: pointer;
+#animate-charcter {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #afe1af 0%,
+    #1db954 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  left: 0;
+  line-height: 200px;
+  margin-top: -100px;
+  position: absolute;
   text-align: center;
+  top: 30%;
+  width: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+  font-size: 190px;
 }
-
+.spotify {
+  position: absolute;
+  margin: auto;
+  top: 60%;
+  left: 41.5%;
+  width: 17%;
+  border: none;
+  background-color: #1db954;
+  color: white;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+#hometext {
+  color: white;
+  /* margin: auto; */
+  position: absolute;
+  /* left: 30%; */
+  text-align: center;
+  top: 45%;
+  width: 100%;
+}
 .spotify:hover {
   color: black;
 }
@@ -50,7 +91,7 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  /* width: 50%; */
 }
 
 .searchBox {
@@ -219,6 +260,11 @@ img {
   float: left;
   margin-right: 7px;
   width: 20px;
+}
+#spotifyicon {
+  float: left;
+  margin-right: 7px;
+  /* margin: 0; */
 }
 
 [data-tab-content] {
@@ -396,34 +442,6 @@ p {
   z-index: 10;
   background-color: #04aa6d;
   color: #fff;
-}
-
-.animate-charcter {
-  text-transform: uppercase;
-  background-image: linear-gradient(
-    -225deg,
-    #afe1af 0%,
-    #1db954 29%,
-    #ff1361 67%,
-    #fff800 100%
-  );
-  background-size: auto auto;
-  background-clip: border-box;
-  background-size: 200% auto;
-  color: #fff;
-  background-clip: text;
-  left: 0;
-  line-height: 200px;
-  margin-top: -100px;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  width: 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textclip 2s linear infinite;
-  display: inline-block;
-  font-size: 190px;
 }
 
 @keyframes textclip {

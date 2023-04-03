@@ -50,6 +50,7 @@ export const UserRegister = (props) => {
       <div className="auth-form-container">
         <h1 className="different">Sign up!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
+          <input type="file" id="myFile" name="filename" />
           <label htmlFor="fname">Username:</label>
           <input
             value={username}
@@ -75,6 +76,7 @@ export const UserRegister = (props) => {
             name="lname"
           ></input>
           <p className="redtext">{register}</p>
+          {/* <p>Data is </p> */}
           <input type="submit" className="formButton" value="Register"></input>
         </form>{" "}
         <button

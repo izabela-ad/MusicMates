@@ -28,6 +28,7 @@ export const UserProfile = (props) => {
   const [incorr, setInc] = useState("");
   const [loggedIn, setLogin] = useState(false);
   const navigate = useNavigate();
+  localStorage.setItem("logged_in", false);
 
   const handleClick = () => {
     navigate("/register");
@@ -66,6 +67,7 @@ export const UserProfile = (props) => {
     ) {
       setInc("");
       setLogin(true);
+      localStorage.setItem("logged_in", true);
       console.log("LOGGED IN!");
       // return <APICalls />;
       handleClickHome();

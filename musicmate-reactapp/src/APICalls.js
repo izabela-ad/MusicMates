@@ -307,6 +307,15 @@ function APICalls() {
   };
   welcome();
   const [loggedOut, setLog] = useState(false);
+  console.log("localstor:" + localStorage.getItem("logged_in"));
+  const logged_in = localStorage.getItem("logged_in");
+  console.log(logged_in);
+  if (false) {
+    console.log("exe");
+    // setLog(true);
+    handleClick();
+  }
+
   function print() {
     const tabs = document.querySelectorAll("[data-tab-target]");
     console.log(tabs);
@@ -332,6 +341,7 @@ function APICalls() {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    localStorage.setItem("logged_in", false);
     navigate("/");
   };
 
