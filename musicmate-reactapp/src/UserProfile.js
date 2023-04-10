@@ -4,6 +4,7 @@ import APICalls from "./APICalls";
 import { useNavigate } from "react-router-dom"; // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,6 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 export const UserProfile = (props) => {
@@ -27,8 +29,18 @@ export const UserProfile = (props) => {
   const [password, setPass] = useState("");
   const [incorr, setInc] = useState("");
   const [loggedIn, setLogin] = useState(false);
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
   localStorage.setItem("logged_in", false);
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(users);
+    };
+    getUsers();
+  }, []);
 
   const handleClick = () => {
     navigate("/register");
@@ -61,21 +73,32 @@ export const UserProfile = (props) => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      username === localStorage.getItem("username") &&
-      password === localStorage.getItem("password")
-    ) {
-      setInc("");
-      setLogin(true);
-      localStorage.setItem("logged_in", true);
-      console.log("LOGGED IN!");
-      // return <APICalls />;
-      handleClickHome();
-    } else {
-      setInc("Incorrect Username or password");
-    }
-    console.log(username);
-    console.log(password);
+
+    users.map((user) => {
+      const dbusername = user.username;
+      const dbpassword = user.password;
+      // console.log(user.username);
+      // console.log(user.password);
+      // username === localStorage.getItem("username") &&
+      //   password === localStorage.getItem("password")
+      console.log(username + "===" + dbusername);
+      console.log(password + "===" + dbpassword);
+      if (username === dbusername && password === dbpassword) {
+        setInc("");
+        setLogin(true);
+        localStorage.setItem("logged_in", true);
+        localStorage.setItem("user_id", user.id);
+        console.log("LOGGED IN!");
+        // return <APICalls />;
+        handleClickHome();
+      }
+      // else {
+      //   setInc("Incorrect Username or password");
+      // }
+    });
+    setInc("Incorrect Username or password");
+    // console.log(username);
+    // console.log(password);
   };
   return loggedIn ? (
     <APICalls />

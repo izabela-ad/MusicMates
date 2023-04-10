@@ -4,7 +4,30 @@ import Login from "./Login";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+
 // import(RegExp);
+// require("dotenv").config();
+// const apiKey = ;
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: "musicmate-9669c.firebaseapp.com",
+  projectId: "musicmate-9669c",
+  storageBucket: "musicmate-9669c.appspot.com",
+  messagingSenderId: "368024610536",
+  appId: "1:368024610536:web:f83d8d41154a5f29800b5d",
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 function APICalls() {
   $(document).ready(() => dragElement(document.getElementById("mydiv")));
@@ -58,6 +81,7 @@ function APICalls() {
       document.onmousemove = null;
     }
   }
+
   function animateDivs() {
     $(document).ready(function ($) {
       (function fadeNext(collection) {
@@ -122,6 +146,12 @@ function APICalls() {
     <img src ="${data.images[0].url}" id="homePhoto" >`;
     console.log(data);
     console.log(data.images[0].url);
+    const newFields = { image: data.images[0].url };
+    const updateUser = async (id) => {
+      const userDoc = doc(db, "users", id);
+      await updateDoc(userDoc, newFields);
+    };
+    updateUser(localStorage.getItem("user_id"));
   };
   const getTopArtist = async (token, time_range) => {
     const result = await fetch(
@@ -134,6 +164,24 @@ function APICalls() {
     if (result.ok && result.status === 200) {
       const data = await result.json();
       console.log(data);
+      if (time_range === "long_term") {
+        console.log(localStorage.getItem("user_id"));
+
+        // const arr = [];
+        const map = new Map();
+        for (let m = 0; m < Math.min(data.items.length, 20); m++) {
+          map.set(data.items[m].name, 20 - m);
+        }
+        // console.log(map);
+        const obj = Object.fromEntries(map);
+        const newFields = { topArtists: obj };
+        // console.log(newFields);
+        const updateUser = async (id) => {
+          const userDoc = doc(db, "users", id);
+          await updateDoc(userDoc, newFields);
+        };
+        updateUser(localStorage.getItem("user_id"));
+      }
       document.querySelector(".artistBox").innerHTML = "";
       for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].images.length !== 0) {
@@ -174,6 +222,7 @@ function APICalls() {
     if (result.ok && result.status === 200) {
       const data = await result.json();
       console.log(data);
+
       document.querySelector(".artistBox").innerHTML = "";
       for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].album.images.length !== 0) {
@@ -277,12 +326,24 @@ function APICalls() {
       for (let k = 0; k < items.length; k++) {
         count += items[k][1];
       }
+      const map = new Map();
       for (let l = 0; l < items.length; l++) {
+        console.log(localStorage.getItem("user_id"));
+        map.set(items[l][0], Math.round((items[l][1] / count) * 10000) / 100);
         document.querySelector(".artistBox").innerHTML += `
           <p>
           ${items[l][0]}, ${Math.round((items[l][1] / count) * 10000) / 100}%
         </p></br>`;
       }
+      // console.log(map);
+      const obj = Object.fromEntries(map);
+      const newFields = { topGenres: obj };
+      // console.log(newFields);
+      const updateUser = async (id) => {
+        const userDoc = doc(db, "users", id);
+        await updateDoc(userDoc, newFields);
+      };
+      updateUser(localStorage.getItem("user_id"));
     }
   };
   console.log("access_token: " + localStorage.getItem("access-token"));
@@ -318,11 +379,13 @@ function APICalls() {
 
   function print() {
     const tabs = document.querySelectorAll("[data-tab-target]");
-    console.log(tabs);
+    // console.log(tabs);
     const tabContents = document.querySelectorAll("[data-tab-content]");
     tabs.forEach(async (tab) => {
       tab.addEventListener("click", () => {
         const target = document.querySelector(tab.dataset.tabTarget);
+        const glider = document.querySelector(".glider");
+
         tabContents.forEach((tabContent) => {
           tabContent.classList.remove("active");
         });
@@ -331,8 +394,41 @@ function APICalls() {
         });
         document.querySelector(".artistBox").innerHTML = "";
         // console.log("executes");
-        tab.classList.add("active");
-        target.classList.add("active");
+
+        // console.log(tab);
+        // console.log(tab.);
+        const idName = target.getAttribute("id");
+        // console.log();
+        if (idName === "search") {
+          glider.style.transform = "translateX(0%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
+        if (idName === "topArtists") {
+          glider.style.transform = "translateX(100%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
+        if (idName === "topTracks") {
+          glider.style.transform = "translateX(200%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
+        if (idName === "topGenres") {
+          glider.style.transform = "translateX(300%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
+        if (idName === "ticketmaster") {
+          glider.style.transform = "translateX(400%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
       });
     });
   }
@@ -369,23 +465,21 @@ function APICalls() {
         <li
           input
           type="button"
-          data-tab-target="#somethingelse"
+          data-tab-target="#topGenres"
           className="tab"
           onClick={() => loadGenres()}
         >
           Top Genres
         </li>
-        <li
-          input
-          type="button"
-          id="logout"
-          data-tab-target="#logout"
-          className="tab"
-          onClick={handleClick}
-        >
-          Log out
+        <li data-tab-target="#ticketmaster" className="tab">
+          Ticketmaster
         </li>
+
+        <span class="glider"></span>
       </ul>
+      <li input type="button" id="logout" className="tab" onClick={handleClick}>
+        Log out
+      </li>
       <div className="tab-content">
         <div id="search" data-tab-content className="active">
           <div className="searchBox">
@@ -438,8 +532,44 @@ function APICalls() {
             All-Time
           </button>
         </div>
-        <div id="somethingelse" data-tab-content>
+        <div id="topGenres" data-tab-content>
           {/* <input type="button" /> */}
+        </div>
+        <div id="ticketmaster" data-tab-content>
+          <div id="mydiv">
+            <div id="mydivheader">Click and drag for events!</div>
+            <div
+              w-type="event-discovery"
+              w-tmapikey="Hx0kW4rNJ6whGxOFbqhm9BtDavqfDTmE"
+              w-googleapikey="YOUR_GOOGLE_API_KEY"
+              w-keyword=""
+              w-theme="simple"
+              w-colorscheme="light"
+              w-width="350"
+              w-height="600"
+              w-size="25"
+              w-border="0"
+              w-borderradius="4"
+              w-postalcode=""
+              w-radius="25"
+              w-city="Los Angeles"
+              w-period="week"
+              w-layout="vertical"
+              w-attractionid=""
+              w-promoterid=""
+              w-venueid=""
+              w-affiliateid=""
+              w-segmentid=""
+              w-proportion="custom"
+              w-titlelink="off"
+              w-sorting="groupByName"
+              w-id="id_05ibir"
+              w-countrycode="US"
+              w-source=""
+              w-branding="Ticketmaster"
+              w-latlong=""
+            ></div>
+          </div>
         </div>
         <div id="logout" data-tab-content>
           <input type="button" />
@@ -449,40 +579,6 @@ function APICalls() {
 
       <div className="topBox"></div>
       <div className="artistBox"></div>
-      <div id="mydiv">
-        <div id="mydivheader">Click and drag for events!</div>
-        <div
-          w-type="event-discovery"
-          w-tmapikey="Hx0kW4rNJ6whGxOFbqhm9BtDavqfDTmE"
-          w-googleapikey="YOUR_GOOGLE_API_KEY"
-          w-keyword=""
-          w-theme="simple"
-          w-colorscheme="light"
-          w-width="350"
-          w-height="600"
-          w-size="25"
-          w-border="0"
-          w-borderradius="4"
-          w-postalcode=""
-          w-radius="25"
-          w-city="Los Angeles"
-          w-period="week"
-          w-layout="vertical"
-          w-attractionid=""
-          w-promoterid=""
-          w-venueid=""
-          w-affiliateid=""
-          w-segmentid=""
-          w-proportion="custom"
-          w-titlelink="off"
-          w-sorting="groupByName"
-          w-id="id_05ibir"
-          w-countrycode="US"
-          w-source=""
-          w-branding="Ticketmaster"
-          w-latlong=""
-        ></div>
-      </div>
     </div>
   );
 }

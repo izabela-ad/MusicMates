@@ -3,18 +3,50 @@ import "./App.css";
 import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Buffer } from "buffer";
-import Login from "./Login";
-import UserProfile from "./UserProfile";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+// const { getDatabase } = require("firebase-admin/database");
 //import "./webapp.css";
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: "musicmate-9669c.firebaseapp.com",
+  projectId: "musicmate-9669c",
+  storageBucket: "musicmate-9669c.appspot.com",
+  messagingSenderId: "368024610536",
+  appId: "1:368024610536:web:f83d8d41154a5f29800b5d",
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export const UserRegister = (props) => {
   //   async function storeData() {
-
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
   const [username, setUser] = useState("");
   const [password, setPass] = useState("");
   const [password2, setPass2] = useState("");
   const [register, setReg] = useState("");
+  // const db = getDatabase();
+  // const ref = db.ref("server/saving-data/fireblog");
+  // const usersRef = ref.child("users");
+  // const newPostRef = postsRef.push();
+  // newPostRef.set({
+  //   author: "gracehop",
+  //   title: "Announcing COBOL, a New Programming Language",
+  // });
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(usersCollectionRef);
+  //     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //     // console.log(users);
+  //     users.map((user) => {
+  //       console.log(user.username);
+  //       console.log(user.password);
+  //     });
+  //   };
+  //   getUsers();
+  // }, []);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -31,8 +63,15 @@ export const UserRegister = (props) => {
       setReg("Passwords do not match");
     } else {
       setReg("");
-      localStorage.setItem("username", username);
-      localStorage.setItem("password", password);
+      // localStorage.setItem("username", username);
+      // localStorage.setItem("password", password);
+      const createUser = async () => {
+        await addDoc(usersCollectionRef, {
+          username: username,
+          password: password,
+        });
+      };
+      createUser();
       // props.onFormSwitch("login");
       handleClick();
     }
