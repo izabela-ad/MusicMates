@@ -62,6 +62,43 @@ export const Compare = () => {
   };
   const docFriendRef = doc(db, "users", localStorage.getItem("button_id"));
   const docUserRef = doc(db, "users", localStorage.getItem("user_id"));
+  var totalSharedCount = 0;
+  const someothername = {};
+  const getHalfScore = async () => {
+    // document.querySelector(".sharedArtistCon").innerHTML = "";
+    const docFriendSnap = await getDoc(docFriendRef);
+    const docUserSnap = await getDoc(docUserRef);
+    var artistTotal = 0;
+    var genreTotal = 0;
+    for (var key in docUserSnap.data().topArtists) {
+      // console.log(key);
+      if (docFriendSnap.data().topArtists.hasOwnProperty(key)) {
+        var addedScore =
+          docFriendSnap.data().topArtists[key] +
+          docUserSnap.data().topArtists[key];
+        // addedScoreObj[key] = addedScore;
+        artistTotal += addedScore;
+      }
+    }
+    for (var key in docUserSnap.data().topGenres) {
+      // console.log(key);
+      if (docFriendSnap.data().topGenres.hasOwnProperty(key)) {
+        var addedScore =
+          docFriendSnap.data().topGenres[key] +
+          docUserSnap.data().topGenres[key];
+        //   genreScoreObj[key] = addedScore;
+        genreTotal += addedScore;
+      }
+    }
+    console.log("artistTotal: " + artistTotal + " genreTotal: " + genreTotal);
+    return (artistTotal / 420.0) * 0.25 + (genreTotal / 200.0) * 0.25;
+  };
+  //   const simScore = async (name) => {
+  //     const simScore = await getSimScore();
+  //     // console.log(simScore);
+  //     return simScore;
+  //   };
+  //   console.log(getSimScore());
   const addedScoreObj = {};
   const getSpecifiedDocArtists = async () => {
     // document.querySelector(".sharedArtistCon").innerHTML = "";
@@ -81,20 +118,33 @@ export const Compare = () => {
       (a, b) => b[1] - a[1]
     );
     var count = 1;
+
     for (let [key, value] of sortedArray) {
       const img_url = await loadData(key);
+
       document.querySelector(".sharedArtistCon").innerHTML += `
         <div class="sharedArtist">
         <img src="${img_url}" class="sharedArtistPhoto"alt=${key} />
         <h1>${count}. ${key}</h1>
+        <p>${key} was ${docFriendSnap.data().username}'s #${Math.abs(
+        docFriendSnap.data().topArtists[key] - 21
+      )} top artist</p>
+        <p>${key} was your #${Math.abs(
+        docUserSnap.data().topArtists[key] - 21
+      )} top artist</p>
         </div>
         `;
+      totalSharedCount++;
       if (count === 5) {
         break;
       }
+
       count++;
     }
+    // console.log("totalSharedCount: " + totalSharedCount);
+    await getSimScore();
   };
+  //   console.log("exe");
   getSpecifiedDocArtists();
   const genreScoreObj = {};
   const getSpecifiedDocGenre = async () => {
@@ -118,24 +168,51 @@ export const Compare = () => {
     for (let [key, value] of sortedArray) {
       let str = String(key);
       str = str.charAt(0).toUpperCase() + str.slice(1);
-      const img_url = await loadData(key);
+      //   const img_url = await loadData(key);
       document.querySelector(".sharedGenreCon").innerHTML += `
           <div class="sharedGenre">
           <h1>${count}. ${str}</h1>
+          <p>${str} made up ${docFriendSnap.data().topGenres[key]}% of ${
+        docFriendSnap.data().username
+      }'s listening time.</p>
+            <p>${str} made up ${
+        docUserSnap.data().topGenres[key]
+      }% of your listening time.</p>
           </div>
           `;
+      totalSharedCount++;
       if (count === 5) {
         break;
       }
+
       count++;
     }
   };
   getSpecifiedDocGenre();
+  //   var tempScore = 0;
+
+  const getSimScore = async () => {
+    const halfScore = await getHalfScore();
+    console.log(halfScore);
+    const sharedScore = (totalSharedCount / 10) * 0.5;
+    const simScore = Math.round((halfScore + sharedScore) * 10000) / 100;
+    // console.log(
+    //   "simScore: " + simScore + "totalSharedCount: " + totalSharedCount
+    // );
+    console.log("totalSharedCount: " + totalSharedCount);
+    document.querySelector("#simscore").innerHTML += `
+          <div id="simPie"class="pie animate" style="--p:${simScore};--c:#1db954"> ${simScore}%</div>     `;
+  };
+  //   getSimScore();
+
   return (
     <div className="Compare">
       <button id="logout" onClick={handleClick}>
         Back
       </button>
+      <div id="simscore">
+        <h1>Similarity Score</h1>
+      </div>
       <h1>Top Shared Artists</h1>
       <div className="sharedArtistCon"></div>
       <h1>Top Shared Genres</h1>

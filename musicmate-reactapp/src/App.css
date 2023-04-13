@@ -500,6 +500,7 @@ p {
   --c: darkred;
   --w: 150px;
   color: white;
+  /* margin: 0 auto; */
 
   width: var(--w);
   aspect-ratio: 1;
@@ -579,8 +580,27 @@ p {
 .sharedArtist {
   display: flex;
   margin: 0 auto;
+  width: 60%;
+  align-items: center;
+}
+.sharedArtist p {
+  color: white;
+  margin: 0 auto;
+}
+.sharedGenre {
+  display: flex;
+  margin: 0 auto;
   width: 50%;
   align-items: center;
+}
+#simscore {
+  /* display: flex; */
+  margin: 0 auto;
+  /* width: 20%; */
+  align-items: center;
+}
+#simPie {
+  left: 45%;
 }
 @keyframes p {
   from {
