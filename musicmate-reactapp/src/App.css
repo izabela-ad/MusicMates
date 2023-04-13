@@ -583,15 +583,16 @@ p {
   width: 60%;
   align-items: center;
 }
-.sharedArtist p {
-  color: white;
-  margin: 0 auto;
-}
+
 .sharedGenre {
   display: flex;
   margin: 0 auto;
   width: 50%;
   align-items: center;
+}
+.Compare p {
+  color: white;
+  margin: 0 auto;
 }
 #simscore {
   /* display: flex; */
