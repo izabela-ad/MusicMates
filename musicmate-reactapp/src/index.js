@@ -9,6 +9,7 @@ import APICalls from "./APICalls";
 import UserProfile from "./UserProfile";
 import UserRegister from "./UserRegister";
 import Callback from "./Callback";
+import Compare from "./Compare";
 import Chat from "./Chat";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -25,6 +26,7 @@ root.render(
       <Route path="/callback" element={<Callback />} />
       <Route path="/signin" element={<UserProfile />} />
       <Route path="/register" element={<UserRegister />} />
+      <Route path="/compare" element={<Compare />} />
       {/* <Route path="/chat" element={<Chat />} /> */}
     </Routes>
   </BrowserRouter>

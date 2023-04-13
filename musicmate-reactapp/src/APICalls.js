@@ -1,15 +1,16 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./Login";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import $ from "jquery";
+import $, { get } from "jquery";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   updateDoc,
   doc,
 } from "firebase/firestore";
@@ -92,6 +93,7 @@ function APICalls() {
       })($(".resultBox"));
     });
   }
+  const navigate = useNavigate();
   const getArtist = async (token) => {
     const name = document.querySelector("#artistName").value;
     const result = await fetch(
@@ -140,9 +142,10 @@ function APICalls() {
       headers: { Authorization: "Bearer " + token },
     });
     const data = await result.json();
+
     document.querySelector(
       ".welcome"
-    ).innerHTML = `Welcome,  ${data.display_name}!
+    ).innerHTML = `Welcome,  ${localStorage.getItem("username")}!
     <img src ="${data.images[0].url}" id="homePhoto" >`;
     console.log(data);
     console.log(data.images[0].url);
@@ -331,10 +334,22 @@ function APICalls() {
         console.log(localStorage.getItem("user_id"));
         map.set(items[l][0], Math.round((items[l][1] / count) * 10000) / 100);
         document.querySelector(".artistBox").innerHTML += `
-          <p>
-          ${items[l][0]}, ${Math.round((items[l][1] / count) * 10000) / 100}%
-        </p></br>`;
+        <div class="pie animate" style="--p:${
+          Math.round((items[l][1] / count) * 10000) / 100
+        };--c:${
+          "rgb(" +
+          Math.floor(Math.random() * 255) +
+          "," +
+          Math.floor(Math.random() * 255) +
+          "," +
+          Math.floor(Math.random() * 255) +
+          ")"
+        }"> ${items[l][0]}, ${
+          Math.round((items[l][1] / count) * 10000) / 100
+        }%</div>
+       `;
       }
+      // <p> </p></br>
       // console.log(map);
       const obj = Object.fromEntries(map);
       const newFields = { topGenres: obj };
@@ -376,6 +391,44 @@ function APICalls() {
     // setLog(true);
     handleClick();
   }
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      // console.log(users);
+    };
+    getUsers();
+  }, []);
+  const populateFriends = async () => {
+    document.querySelector(".friendContainer").innerHTML = "";
+    users.map((user) => {
+      const dbusername = user.username;
+      if (dbusername !== localStorage.getItem("username")) {
+        document.querySelector(
+          ".friendContainer"
+        ).innerHTML += `<div class ="anotherFriendCon"><img src ="${user.image}" class="friendPhotos" >
+        <button id="${user.id}"class="calculateFriend">${dbusername}</button></div>`;
+      }
+    });
+    // <h1>${dbusername}</h1>document.querySelector(".artistBox").innerHTML += `<p></p>`;
+  };
+  populateFriends();
+  // const buttonId = "";
+  const handleButton = (event) => {
+    const button = event.target.closest("button");
+    if (button) {
+      // buttonId = button.id;
+      console.log(button.id);
+      localStorage.setItem("button_id", button.id);
+
+      navigate("/compare");
+    }
+  };
+
+  // const docRef = db.collection("users").doc("myDocumentId");
+  // console.log
 
   function print() {
     const tabs = document.querySelectorAll("[data-tab-target]");
@@ -399,12 +452,13 @@ function APICalls() {
         // console.log(tab.);
         const idName = target.getAttribute("id");
         // console.log();
-        if (idName === "search") {
+        if (idName === "friends") {
           glider.style.transform = "translateX(0%)";
           tab.classList.add("active");
           target.classList.add("active");
           // tab.style.color = "#185ee0";
         }
+
         if (idName === "topArtists") {
           glider.style.transform = "translateX(100%)";
           tab.classList.add("active");
@@ -423,8 +477,14 @@ function APICalls() {
           target.classList.add("active");
           // tab.style.color = "#185ee0";
         }
-        if (idName === "ticketmaster") {
+        if (idName === "search") {
           glider.style.transform = "translateX(400%)";
+          tab.classList.add("active");
+          target.classList.add("active");
+          // tab.style.color = "#185ee0";
+        }
+        if (idName === "ticketmaster") {
+          glider.style.transform = "translateX(500%)";
           tab.classList.add("active");
           target.classList.add("active");
           // tab.style.color = "#185ee0";
@@ -433,8 +493,6 @@ function APICalls() {
     });
   }
   $(document).ready(() => print());
-
-  const navigate = useNavigate();
 
   const handleClick = () => {
     localStorage.setItem("logged_in", false);
@@ -450,13 +508,26 @@ function APICalls() {
     <div className="container">
       <div className="welcome"></div>
       <ul className="tabs">
-        <li data-tab-target="#search" className="active tab">
-          Search
+        <li
+          data-tab-target="#friends"
+          className="active tab"
+          onClick={() => populateFriends()}
+        >
+          Friends
         </li>
-        <li data-tab-target="#topArtists" className="tab">
+
+        <li
+          data-tab-target="#topArtists"
+          className="tab"
+          onClick={() => topArtistButton("short_term")}
+        >
           Top Artists
         </li>
-        <li data-tab-target="#topTracks" className="tab">
+        <li
+          data-tab-target="#topTracks"
+          className="tab"
+          onClick={() => topTrackButton("short_term")}
+        >
           Top Tracks
         </li>
         {/* <li data-tab-target="#topGenres" className="tab">
@@ -471,30 +542,27 @@ function APICalls() {
         >
           Top Genres
         </li>
+        <li data-tab-target="#search" className="tab">
+          Search
+        </li>
         <li data-tab-target="#ticketmaster" className="tab">
           Ticketmaster
         </li>
 
         <span class="glider"></span>
       </ul>
-      <li input type="button" id="logout" className="tab" onClick={handleClick}>
-        Log out
-      </li>
+
       <div className="tab-content">
-        <div id="search" data-tab-content className="active">
-          <div className="searchBox">
-            <input id="artistName" type="text" placeholder="Artist Name" />
-            <button className="search" onClick={loadData}>
-              🔎
-            </button>
-          </div>
+        <div id="friends" data-tab-content className="active">
+          <div className="friendContainer" onClick={handleButton}></div>
         </div>
+
         <div id="topArtists" data-tab-content>
           {/* <button className="buttonelse" onClick={() => loadGenres()}>
             genres
           </button> */}
           <button
-            className="button1"
+            className="button1 active"
             onClick={() => topArtistButton("short_term")}
           >
             4 weeks
@@ -535,6 +603,14 @@ function APICalls() {
         <div id="topGenres" data-tab-content>
           {/* <input type="button" /> */}
         </div>
+        <div id="search" data-tab-content>
+          <div className="searchBox">
+            <input id="artistName" type="text" placeholder="Artist Name" />
+            <button className="search" onClick={loadData}>
+              🔎
+            </button>
+          </div>
+        </div>
         <div id="ticketmaster" data-tab-content>
           <div id="mydiv">
             <div id="mydivheader">Click and drag for events!</div>
@@ -571,11 +647,14 @@ function APICalls() {
             ></div>
           </div>
         </div>
-        <div id="logout" data-tab-content>
+        {/* <div id="logout" data-tab-content>
           <input type="button" />
-        </div>
+        </div> */}
       </div>
-      <div className="container"></div>
+      {/* <li input type="button" className="tab" ></li> */}
+      <button id="logout" onClick={handleClick}>
+        Log out
+      </button>
 
       <div className="topBox"></div>
       <div className="artistBox"></div>

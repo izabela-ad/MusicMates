@@ -11,7 +11,7 @@ import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB_6as5__n3z1QLnurXeXymtJBMr0ts9Vc",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
   authDomain: "musicmate-9669c.firebaseapp.com",
   projectId: "musicmate-9669c",
   storageBucket: "musicmate-9669c.appspot.com",
@@ -88,6 +88,7 @@ export const UserProfile = (props) => {
         setLogin(true);
         localStorage.setItem("logged_in", true);
         localStorage.setItem("user_id", user.id);
+        localStorage.setItem("username", dbusername);
         console.log("LOGGED IN!");
         // return <APICalls />;
         handleClickHome();

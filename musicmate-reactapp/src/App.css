@@ -126,6 +126,7 @@ img {
 #homePhoto {
   position: absolute;
   width: 50px;
+  border-radius: 50%;
   /* height: auto;
   display: flex; */
   /* float: right; */
@@ -157,6 +158,7 @@ img {
   height: 2000px;
   width: 100%; */
   /* display: flex; */
+
   text-align: center;
   margin-top: 100px;
   margin-bottom: 70px;
@@ -226,18 +228,22 @@ img {
 #logout {
   position: absolute;
   border-radius: 8px;
+  border: none;
   outline: none;
   height: 36px;
-  width: auto;
-  padding: 4px 16px;
+  width: 7%;
+  /* padding: 4px 16px; */
+  font-size: 20px;
   background-color: #04aa6d;
   color: white;
   margin: 0px;
-  top: 50px;
+  top: 80px;
   right: 50px;
+  cursor: pointer;
 }
 #logout:hover {
-  top: -0.25rem;
+  color: black;
+  /* top: -0.25rem; */
   transition: top 0.25s;
 }
 .formButton {
@@ -293,7 +299,7 @@ img {
   box-shadow: 0 0 1px 0 rgba(#185ee0, 0.15), 0 6px 12px 0 rgba(#185ee0, 0.15);
   /* padding: 0.75rem; */
   border-radius: 99px;
-  width: 70%;
+  width: 85%;
   z-index: 2;
 }
 .tabs::before,
@@ -361,8 +367,8 @@ img {
   /* z-index: 1; */
   top: -0.0625rem;
 }
-.active {
-  color: #185ee0;
+.tab.active {
+  color: #1db954;
 }
 .tab-switch:checked + label + .tab-content {
   z-index: 2;
@@ -476,11 +482,110 @@ p {
   height: 54px;
   /* top: 30%; */
   /* left: 0%; */
-  width: 200px;
+  width: 16%;
   background-color: #e6eef9;
   z-index: 1;
   border-radius: 99px;
   transition: 0.25s ease-out;
+}
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.pie {
+  --p: 20;
+  --b: 22px;
+  --c: darkred;
+  --w: 150px;
+  color: white;
+
+  width: var(--w);
+  aspect-ratio: 1;
+  position: relative;
+  display: inline-grid;
+  margin: 5px;
+  place-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.pie:before,
+.pie:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.pie:before {
+  inset: 0;
+  background: radial-gradient(farthest-side, var(--c) 98%, #0000) top/var(--b)
+      var(--b) no-repeat,
+    conic-gradient(var(--c) calc(var(--p) * 1%), #0000 0);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(99% - var(--b)),
+    #000 calc(100% - var(--b))
+  );
+  mask: radial-gradient(
+    farthest-side,
+    #0000 calc(99% - var(--b)),
+    #000 calc(100% - var(--b))
+  );
+}
+.pie:after {
+  inset: calc(50% - var(--b) / 2);
+  background: var(--c);
+  transform: rotate(calc(var(--p) * 3.6deg))
+    translateY(calc(50% - var(--w) / 2));
+}
+.animate {
+  animation: p 1s 0.5s both;
+}
+.no-round:before {
+  background-size: 0 0, auto;
+}
+.no-round:after {
+  content: none;
+}
+.friendPhotos {
+  border-radius: 50%;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+}
+.anotherFriendCon {
+  display: flex;
+  align-items: center;
+}
+.calculateFriend {
+  border-radius: 8px;
+  border: none;
+  height: 36px;
+  font-size: 2em;
+  font-weight: bold;
+  background: none;
+  color: white;
+  margin: 10px;
+  cursor: pointer;
+}
+.calculateFriend:hover {
+  color: #1db954;
+}
+.sharedArtistPhoto {
+  width: 100px;
+  margin: 10px;
+}
+.sharedArtist {
+  display: flex;
+  margin: 0 auto;
+  width: 50%;
+  align-items: center;
+}
+@keyframes p {
+  from {
+    --p: 0;
+  }
 }
 
 @keyframes textclip {
