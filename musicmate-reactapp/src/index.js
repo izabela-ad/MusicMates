@@ -27,7 +27,7 @@ root.render(
       <Route path="/signin" element={<UserProfile />} />
       <Route path="/register" element={<UserRegister />} />
       <Route path="/compare" element={<Compare />} />
-      {/* <Route path="/chat" element={<Chat />} /> */}
+      <Route path="/chat" element={<Chat />} />
     </Routes>
   </BrowserRouter>
   // {/* </React.StrictMode> */}
