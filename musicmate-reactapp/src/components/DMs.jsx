@@ -17,7 +17,7 @@ const DirectChatPage = () => {
     return (
       <div>
         <input
-          placeholder="Username"
+          placeholder="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />

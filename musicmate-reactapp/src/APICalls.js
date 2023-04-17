@@ -31,6 +31,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 function APICalls() {
+  // const navigate = useNavigate();
+  const handleOnClick = () => navigate("/chat");
   $(document).ready(() => dragElement(document.getElementById("mydiv")));
   var script = document.createElement("script");
   script.type = "text/javascript";
@@ -548,7 +550,9 @@ function APICalls() {
         <li data-tab-target="#ticketmaster" className="tab">
           Ticketmaster
         </li>
-
+        <li data-tab-target="#chat" className="tab" onClick={handleOnClick}>
+          Chat
+        </li>
         <span class="glider"></span>
       </ul>
 
