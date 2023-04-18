@@ -1,6 +1,10 @@
 # MusicMate
 
-A senior project by Dylan McGoldrick, Izabela Aranda-Dooley, Erika Proctor, and Will Ruskin.
+A senior project by Dylan McGoldrick, Izabela Aranda-Dooley, Erika Proctor, and Will Ruskin.  
+<p align="center">
+  <img src="/musicmate-reactapp/public/musicmate.jpg" width="400">
+</p>
+
 
 This app is not deployed yet on any website.
 
