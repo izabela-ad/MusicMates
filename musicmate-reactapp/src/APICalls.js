@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 import Login from "./Login";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import $, { get } from "jquery";
+import $ from "jquery";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {
   getFirestore,
   collection,
   getDocs,
-  getDoc,
   updateDoc,
   doc,
 } from "firebase/firestore";
