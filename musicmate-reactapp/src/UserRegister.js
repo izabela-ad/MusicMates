@@ -81,11 +81,7 @@ export const UserRegister = (props) => {
   };
   return (
     <div className="UserRegister">
-      <img
-        className="musicmatelogo"
-        src="../musicmatecropped.png"
-        alt="MusicMate"
-      />
+      <img className="musicmatelogo" src="../musicmate.jpg" alt="MusicMate" />
       <div className="auth-form-container">
         <h1 className="different">Sign up!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
