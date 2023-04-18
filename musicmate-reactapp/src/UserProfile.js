@@ -81,23 +81,28 @@ export const UserProfile = (props) => {
       // console.log(user.password);
       // username === localStorage.getItem("username") &&
       //   password === localStorage.getItem("password")
-      console.log(username + "===" + dbusername);
-      console.log(password + "===" + dbpassword);
-      if (username === dbusername && password === dbpassword) {
-        setInc("");
-        setLogin(true);
-        localStorage.setItem("logged_in", true);
-        localStorage.setItem("user_id", user.id);
-        localStorage.setItem("username", dbusername);
-        console.log("LOGGED IN!");
-        // return <APICalls />;
-        handleClickHome();
+      // console.log(username + "===" + dbusername);
+      // console.log(password + "===" + dbpassword);
+      if (document.getElementById("check").checked) {
+        if (username === dbusername && password === dbpassword) {
+          setInc("");
+          setLogin(true);
+          localStorage.setItem("logged_in", true);
+          localStorage.setItem("user_id", user.id);
+          localStorage.setItem("username", dbusername);
+          console.log("LOGGED IN!");
+          // return <APICalls />;
+          handleClickHome();
+        }
+        // else {
+        //   setInc("Incorrect Username or password");
+        // }
+        setInc("Incorrect Username or password");
+      } else {
+        setInc("Checkbox required");
       }
-      // else {
-      //   setInc("Incorrect Username or password");
-      // }
     });
-    setInc("Incorrect Username or password");
+
     // console.log(username);
     // console.log(password);
   };
@@ -130,6 +135,16 @@ export const UserProfile = (props) => {
             name="lname"
           ></input>
           <p className="redtext">{incorr}</p>
+          <label class="agree">
+            <input type="checkbox" id="check" />I acknowledge that MusicMate
+            will collect my data and listening statistics for app functionality.
+          </label>
+          {/* <input type="checkbox" id="agree" />
+          <label htmlFor="agree">
+            {" "}
+            I acknowledge that MusicMate will collect data based on my listening
+            history for app functionality.
+          </label> */}
           <input type="submit" className="formButton" value="Sign in"></input>
         </form>{" "}
         <p>Or</p>

@@ -186,9 +186,7 @@ const Login = (props) => {
   return (
     <div className="container">
       <h3 id="animate-charcter">MUSICMATE</h3>
-      <h2 id="hometext">
-        View your music taste similarities with your friends!
-      </h2>
+      <h2 id="hometext">A social media app for music lovers.</h2>
       <button className="spotify" onClick={handleLogin}>
         <img id="spotifyicon" src="../assets/spotifyicon.png" width="40" />
         Login with Spotify

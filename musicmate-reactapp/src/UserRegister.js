@@ -89,7 +89,7 @@ export const UserRegister = (props) => {
       <div className="auth-form-container">
         <h1 className="different">Sign up!</h1>
         <form className="login-form" onSubmit={handleSubmit}>
-          <input type="file" id="myFile" name="filename" />
+          {/* <input type="file" id="myFile" name="filename" /> */}
           <label htmlFor="fname">Username:</label>
           <input
             value={username}

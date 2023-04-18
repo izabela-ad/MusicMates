@@ -212,6 +212,10 @@ img {
   background-color: #04aa6d;
   color: white;
 }
+.button1.active {
+  color: black;
+}
+
 .button1:hover {
   cursor: pointer;
   color: black;
@@ -245,6 +249,22 @@ img {
   color: black;
   /* top: -0.25rem; */
   transition: top 0.25s;
+}
+.agree {
+  /* font-family: system-ui, sans-serif; */
+  font-size: 15px;
+  /* font-weight: bold; */
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 1.5em;
+  width: 250px;
+  margin-bottom: 10px;
+}
+#check {
+  width: 20px;
+  height: 20px;
+  margin: 10px;
 }
 .formButton {
   border: none;
@@ -455,7 +475,7 @@ p {
   top: 15%;
 }
 .different {
-  padding: 0px 0 50px;
+  padding: 0px 0 25px;
   color: black;
   background-color: transparent;
   width: 90%;

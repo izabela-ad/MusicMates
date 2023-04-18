@@ -94,6 +94,83 @@ function APICalls() {
     });
   }
   const navigate = useNavigate();
+  const loadingFBArtists = async (token) => {
+    const result = await fetch(
+      `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
+    if (result.ok && result.status === 200) {
+      const data = await result.json();
+      // console.log(localStorage.getItem("user_id"));
+
+      // const arr = [];
+      const map = new Map();
+      for (let m = 0; m < Math.min(data.items.length, 20); m++) {
+        map.set(data.items[m].name, 20 - m);
+      }
+      // console.log(map);
+      const obj = Object.fromEntries(map);
+      const newFields = { topArtists: obj };
+      // console.log(newFields);
+      const updateUser = async (id) => {
+        const userDoc = doc(db, "users", id);
+        await updateDoc(userDoc, newFields);
+      };
+      updateUser(localStorage.getItem("user_id"));
+    }
+  };
+  const loadingFBGenres = async (token) => {
+    const result = await fetch(
+      `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
+    if (result.ok && result.status === 200) {
+      const data = await result.json();
+      var genreCount = {};
+      for (let i = 0; i < data.items.length; i++) {
+        for (let j = 0; j < data.items[i].genres.length; j++) {
+          if (data.items[i].genres[j] in genreCount) {
+            genreCount[data.items[i].genres[j]] +=
+              (50 - i) * (1 / data.items[i].genres.length);
+          } else {
+            genreCount[data.items[i].genres[j]] =
+              (50 - i) * (1 / data.items[i].genres.length);
+          }
+        }
+      }
+      // console.log(genreCount);
+      var items = Object.keys(genreCount).map(function (key) {
+        return [key, genreCount[key]];
+      });
+      items.sort(function (first, second) {
+        return second[1] - first[1];
+      });
+      items = items.slice(0, 10);
+      var count = 0;
+      for (let k = 0; k < items.length; k++) {
+        count += items[k][1];
+      }
+      const map = new Map();
+      for (let l = 0; l < items.length; l++) {
+        // console.log(localStorage.getItem("user_id"));
+        map.set(items[l][0], Math.round((items[l][1] / count) * 10000) / 100);
+      }
+      const obj = Object.fromEntries(map);
+      const newFields = { topGenres: obj };
+      // console.log(newFields);
+      const updateUser = async (id) => {
+        const userDoc = doc(db, "users", id);
+        await updateDoc(userDoc, newFields);
+      };
+      updateUser(localStorage.getItem("user_id"));
+    }
+  };
   const getArtist = async (token) => {
     const name = document.querySelector("#artistName").value;
     const result = await fetch(
@@ -185,6 +262,16 @@ function APICalls() {
         };
         updateUser(localStorage.getItem("user_id"));
       }
+      // Get all buttons with the "button1" class
+      if (time_range === "short_term") {
+        var buttons = document.querySelectorAll(".button1");
+        buttons.forEach(function (button) {
+          button.classList.remove("active");
+        });
+        var button = document.getElementById("4weeks");
+        button.classList.add("active");
+      }
+
       document.querySelector(".artistBox").innerHTML = "";
       for (let i = 0; i < data.items.length; i++) {
         if (data.items[i].images.length !== 0) {
@@ -225,6 +312,14 @@ function APICalls() {
     if (result.ok && result.status === 200) {
       const data = await result.json();
       console.log(data);
+      if (time_range === "short_term") {
+        var buttons = document.querySelectorAll(".button1");
+        buttons.forEach(function (button) {
+          button.classList.remove("active");
+        });
+        var button = document.getElementById("4weeks2");
+        button.classList.add("active");
+      }
 
       document.querySelector(".artistBox").innerHTML = "";
       for (let i = 0; i < data.items.length; i++) {
@@ -288,26 +383,8 @@ function APICalls() {
       const data = await result.json();
       console.log(data);
       var genreCount = {};
-      // const rapRegex = /(rap|hip hop)/;
-      // const altRegex = /(alternative)/;
       for (let i = 0; i < data.items.length; i++) {
         for (let j = 0; j < data.items[i].genres.length; j++) {
-          // if (
-          //   rapRegex.test(data.items[i].genres[j]) ||
-          //   altRegex.test(data.items[i].genres[j])
-          // ) {
-          //   if ("Alternative" in genreCount) {
-          //     genreCount["Alternative"] += 1 / data.items[i].genres.length;
-          //   } else {
-          //     genreCount["Alternative"] = 1 / data.items[i].genres.length;
-          //     // genreCount[data.items[i].genres[j]] += 1;
-          //   }
-          //   if ("Rap/Hip Hop" in genreCount) {
-          //     genreCount["Rap/Hip Hop"] += 1 / data.items[i].genres.length;
-          //   } else {
-          //     genreCount["Rap/Hip Hop"] = 1 / data.items[i].genres.length;
-          //     // genreCount[data.items[i].genres[j]] += 1;
-          //   }
           if (data.items[i].genres[j] in genreCount) {
             genreCount[data.items[i].genres[j]] +=
               (50 - i) * (1 / data.items[i].genres.length);
@@ -363,6 +440,10 @@ function APICalls() {
   };
   console.log("access_token: " + localStorage.getItem("access-token"));
   const tokenType = localStorage.getItem("access-token");
+  const loadFBData = async () => {
+    const artists = await loadingFBArtists(tokenType);
+    const genres = await loadingFBGenres(tokenType);
+  };
   const loadData = async () => {
     const artist = await getArtist(tokenType);
   };
@@ -383,14 +464,14 @@ function APICalls() {
   };
   welcome();
   const [loggedOut, setLog] = useState(false);
-  console.log("localstor:" + localStorage.getItem("logged_in"));
-  const logged_in = localStorage.getItem("logged_in");
-  console.log(logged_in);
-  if (false) {
-    console.log("exe");
-    // setLog(true);
-    handleClick();
-  }
+  // console.log("localstor:" + localStorage.getItem("logged_in"));
+  // const logged_in = localStorage.getItem("logged_in");
+  // console.log(logged_in);
+  // if (false) {
+  //   console.log("exe");
+  //   // setLog(true);
+  //   handleClick();
+  // }
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
   useEffect(() => {
@@ -426,9 +507,20 @@ function APICalls() {
       navigate("/compare");
     }
   };
+  // Get all buttons with the "btn" class
+  var buttons = document.querySelectorAll(".button1");
 
-  // const docRef = db.collection("users").doc("myDocumentId");
-  // console.log
+  // Loop through all buttons and add a click event listener to each one
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      // Remove the "active" class from all buttons
+      buttons.forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+      // Add the "active" class to the clicked button
+      this.classList.add("active");
+    });
+  });
 
   function print() {
     const tabs = document.querySelectorAll("[data-tab-target]");
@@ -437,6 +529,7 @@ function APICalls() {
     tabs.forEach(async (tab) => {
       tab.addEventListener("click", () => {
         const target = document.querySelector(tab.dataset.tabTarget);
+        console.log(target);
         const glider = document.querySelector(".glider");
 
         tabContents.forEach((tabContent) => {
@@ -493,6 +586,8 @@ function APICalls() {
     });
   }
   $(document).ready(() => print());
+  $(document).ready(() => loadFBData());
+  // $(document).ready(() => buttonActive());
 
   const handleClick = () => {
     localStorage.setItem("logged_in", false);
@@ -530,9 +625,6 @@ function APICalls() {
         >
           Top Tracks
         </li>
-        {/* <li data-tab-target="#topGenres" className="tab">
-          Top Genres
-        </li> */}
         <li
           input
           type="button"
@@ -558,11 +650,9 @@ function APICalls() {
         </div>
 
         <div id="topArtists" data-tab-content>
-          {/* <button className="buttonelse" onClick={() => loadGenres()}>
-            genres
-          </button> */}
           <button
-            className="button1 active"
+            className="button1"
+            id="4weeks"
             onClick={() => topArtistButton("short_term")}
           >
             4 weeks
@@ -583,6 +673,7 @@ function APICalls() {
         <div id="topTracks" data-tab-content>
           <button
             className="button1"
+            id="4weeks2"
             onClick={() => topTrackButton("short_term")}
           >
             4 weeks
@@ -600,9 +691,7 @@ function APICalls() {
             All-Time
           </button>
         </div>
-        <div id="topGenres" data-tab-content>
-          {/* <input type="button" /> */}
-        </div>
+        <div id="topGenres" data-tab-content></div>
         <div id="search" data-tab-content>
           <div className="searchBox">
             <input id="artistName" type="text" placeholder="Artist Name" />
@@ -647,11 +736,7 @@ function APICalls() {
             ></div>
           </div>
         </div>
-        {/* <div id="logout" data-tab-content>
-          <input type="button" />
-        </div> */}
       </div>
-      {/* <li input type="button" className="tab" ></li> */}
       <button id="logout" onClick={handleClick}>
         Log out
       </button>
