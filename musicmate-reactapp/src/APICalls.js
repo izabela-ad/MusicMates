@@ -94,34 +94,34 @@ function APICalls() {
     });
   }
   const navigate = useNavigate();
-  const loadingFBArtists = async (token) => {
-    const result = await fetch(
-      `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
-    if (result.ok && result.status === 200) {
-      const data = await result.json();
-      // console.log(localStorage.getItem("user_id"));
+  // const loadingFBArtists = async (token) => {
+  //   const result = await fetch(
+  //     `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
+  //     {
+  //       method: "GET",
+  //       headers: { Authorization: "Bearer " + token },
+  //     }
+  //   );
+  //   if (result.ok && result.status === 200) {
+  //     const data = await result.json();
+  //     // console.log(localStorage.getItem("user_id"));
 
-      // const arr = [];
-      const map = new Map();
-      for (let m = 0; m < Math.min(data.items.length, 20); m++) {
-        map.set(data.items[m].name, 20 - m);
-      }
-      // console.log(map);
-      const obj = Object.fromEntries(map);
-      const newFields = { topArtists: obj };
-      // console.log(newFields);
-      const updateUser = async (id) => {
-        const userDoc = doc(db, "users", id);
-        await updateDoc(userDoc, newFields);
-      };
-      updateUser(localStorage.getItem("user_id"));
-    }
-  };
+  //     // const arr = [];
+  //     const map = new Map();
+  //     for (let m = 0; m < Math.min(data.items.length, 20); m++) {
+  //       map.set(data.items[m].name, 20 - m);
+  //     }
+  //     // console.log(map);
+  //     const obj = Object.fromEntries(map);
+  //     const newFields = { topArtists: obj };
+  //     // console.log(newFields);
+  //     const updateUser = async (id) => {
+  //       const userDoc = doc(db, "users", id);
+  //       await updateDoc(userDoc, newFields);
+  //     };
+  //     updateUser(localStorage.getItem("user_id"));
+  //   }
+  // };
   const loadingFBGenres = async (token) => {
     const result = await fetch(
       `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
@@ -441,7 +441,7 @@ function APICalls() {
   console.log("access_token: " + localStorage.getItem("access-token"));
   const tokenType = localStorage.getItem("access-token");
   const loadFBData = async () => {
-    const artists = await loadingFBArtists(tokenType);
+    // const artists = await loadingFBArtists(tokenType);
     const genres = await loadingFBGenres(tokenType);
   };
   const loadData = async () => {
