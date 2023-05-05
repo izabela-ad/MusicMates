@@ -14,14 +14,10 @@ import Chat from "./Chat";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
   <BrowserRouter>
-    {/* <App /> */}
-    {/* <Login /> */}
-    {/* <Link to="/"></Link> */}
     <Routes>
       <Route path="/*" element={<Login />} />
-      {/* <Route path="/login" element={<Login />} /> */}
+
       <Route path="/home" element={<APICalls />} />
       <Route path="/callback" element={<Callback />} />
       <Route path="/signin" element={<UserProfile />} />
@@ -30,7 +26,6 @@ root.render(
       <Route path="/chat" element={<Chat />} />
     </Routes>
   </BrowserRouter>
-  // {/* </React.StrictMode> */}
 );
 
 // If you want to start measuring performance in your app, pass a function

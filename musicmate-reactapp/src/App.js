@@ -32,9 +32,7 @@ function App() {
   };
   console.log(location.pathname);
   function handleLogin() {
-    // if ((location.pathname = "\\")) {
     handleLoad1();
-    // }
   }
 
   useEffect(() => {
@@ -43,61 +41,11 @@ function App() {
     }
   }, []);
 
-  // console.log(currentForm);
   return !token ? (
     <Login />
-  ) : // window.addEventListener("load", () => handleLogin())
-  // <Routes>
-  //   <Route path="/login" element={<Login />} />
-  //   <Route
-  //     path="/signin"
-  //     element={<UserProfile />}
-  //     onFormSwitch={toggleForm}
-  //   />
-  //   <Route
-  //     path="/register"
-  //     element={<UserRegister />}
-  //     onFormSwitch={toggleForm}
-  //   />
-  // </Routes>
-  currentForm === "login" ? (
-    // handleClick2();
-    <div className="App">
-      {/* <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/signin"
-          element={<UserProfile />}
-          onFormSwitch={toggleForm}
-        />
-        <Route
-          path="/register"
-          element={<UserRegister />}
-          onFormSwitch={toggleForm}
-        />
-        <Route path="/home" element={<APICalls />} />
-      </Routes> */}
-      {/* <Navigate replace to="/s" /> */}
-      {/* <UserProfile /> */}
-      {/* <UserProfile onFormSwitch={toggleForm} /> */}
-      {/* <a onClick={handleClick}>Register</a>
-      <a onClick={handleClick2}>Sign Up</a> */}
-      {/* <Link replace to="/register">
-        register
-      </Link>
-      <Link replace to="/signin">
-        Sign in
-      </Link> */}
-    </div>
+  ) : currentForm === "login" ? (
+    <div className="App">{}</div>
   ) : (
-    // <Routes>
-    //   <Route
-    //     path="/register"
-    //     element={<UserRegister />}
-    //     onFormSwitch={toggleForm}
-    //   />
-    // </Routes>
-    // <div className="App">
     <UserRegister />
   );
 }

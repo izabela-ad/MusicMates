@@ -77,12 +77,7 @@ export const UserProfile = (props) => {
     users.map((user) => {
       const dbusername = user.username;
       const dbpassword = user.password;
-      // console.log(user.username);
-      // console.log(user.password);
-      // username === localStorage.getItem("username") &&
-      //   password === localStorage.getItem("password")
-      // console.log(username + "===" + dbusername);
-      // console.log(password + "===" + dbpassword);
+
       if (document.getElementById("check").checked) {
         if (username === dbusername && password === dbpassword) {
           setInc("");
@@ -91,12 +86,10 @@ export const UserProfile = (props) => {
           localStorage.setItem("user_id", user.id);
           localStorage.setItem("username", dbusername);
           console.log("LOGGED IN!");
-          // return <APICalls />;
+
           handleClickHome();
         }
-        // else {
-        //   setInc("Incorrect Username or password");
-        // }
+
         setInc("Incorrect Username or password");
       } else {
         setInc("Checkbox required");
@@ -135,12 +128,7 @@ export const UserProfile = (props) => {
             <input type="checkbox" id="check" />I acknowledge that MusicMate
             will collect my data and listening statistics for app functionality.
           </label>
-          {/* <input type="checkbox" id="agree" />
-          <label htmlFor="agree">
-            {" "}
-            I acknowledge that MusicMate will collect data based on my listening
-            history for app functionality.
-          </label> */}
+
           <input type="submit" className="formButton" value="Sign in"></input>
         </form>{" "}
         <p>Or</p>

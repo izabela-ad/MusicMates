@@ -46,13 +46,6 @@ export const Compare = () => {
         // console.log(data.artists.items[0].images[0].url);
         img_url = data.artists.items[0].images[0].url;
       }
-
-      //   if (data.artists.items[0].images.length !== 0) {
-      //     document.querySelector(".artistBox").innerHTML += `
-      //         <img src="${data.artists.items[0].images[0].url}" alt=${data.artists.items[0].name} />
-
-      //         `;
-      //   }
     }
     return img_url;
   };
@@ -93,15 +86,9 @@ export const Compare = () => {
     console.log("artistTotal: " + artistTotal + " genreTotal: " + genreTotal);
     return (artistTotal / 420.0) * 0.25 + (genreTotal / 200.0) * 0.25;
   };
-  //   const simScore = async (name) => {
-  //     const simScore = await getSimScore();
-  //     // console.log(simScore);
-  //     return simScore;
-  //   };
-  //   console.log(getSimScore());
+
   const addedScoreObj = {};
   const getSpecifiedDocArtists = async () => {
-    // document.querySelector(".sharedArtistCon").innerHTML = "";
     const docFriendSnap = await getDoc(docFriendRef);
     const docUserSnap = await getDoc(docUserRef);
     for (var key in docUserSnap.data().topArtists) {

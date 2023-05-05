@@ -13,9 +13,6 @@ import {
   doc,
 } from "firebase/firestore";
 
-// import(RegExp);
-// require("dotenv").config();
-// const apiKey = ;
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FB_API_KEY,
   authDomain: "musicmate-9669c.firebaseapp.com",
@@ -29,7 +26,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 function APICalls() {
-  // const navigate = useNavigate();
   const handleOnClick = () => navigate("/chat");
   $(document).ready(() => dragElement(document.getElementById("mydiv")));
   var script = document.createElement("script");
@@ -39,7 +35,6 @@ function APICalls() {
     "https://ticketmaster-api-staging.github.io/products-and-docs/widgets/event-discovery/1.0.0/lib/main-widget.js";
   document.body.appendChild(script);
   function dragElement(elmnt) {
-    // console.log(elmnt);
     var pos1 = 0,
       pos2 = 0,
       pos3 = 0,
@@ -94,34 +89,7 @@ function APICalls() {
     });
   }
   const navigate = useNavigate();
-  // const loadingFBArtists = async (token) => {
-  //   const result = await fetch(
-  //     `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
-  //     {
-  //       method: "GET",
-  //       headers: { Authorization: "Bearer " + token },
-  //     }
-  //   );
-  //   if (result.ok && result.status === 200) {
-  //     const data = await result.json();
-  //     // console.log(localStorage.getItem("user_id"));
 
-  //     // const arr = [];
-  //     const map = new Map();
-  //     for (let m = 0; m < Math.min(data.items.length, 20); m++) {
-  //       map.set(data.items[m].name, 20 - m);
-  //     }
-  //     // console.log(map);
-  //     const obj = Object.fromEntries(map);
-  //     const newFields = { topArtists: obj };
-  //     // console.log(newFields);
-  //     const updateUser = async (id) => {
-  //       const userDoc = doc(db, "users", id);
-  //       await updateDoc(userDoc, newFields);
-  //     };
-  //     updateUser(localStorage.getItem("user_id"));
-  //   }
-  // };
   const loadingFBGenres = async (token) => {
     const result = await fetch(
       `https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term`,
@@ -464,21 +432,13 @@ function APICalls() {
   };
   welcome();
   const [loggedOut, setLog] = useState(false);
-  // console.log("localstor:" + localStorage.getItem("logged_in"));
-  // const logged_in = localStorage.getItem("logged_in");
-  // console.log(logged_in);
-  // if (false) {
-  //   console.log("exe");
-  //   // setLog(true);
-  //   handleClick();
-  // }
+
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      // console.log(users);
     };
     getUsers();
   }, []);
@@ -493,14 +453,12 @@ function APICalls() {
         <button id="${user.id}"class="calculateFriend">${dbusername}</button></div>`;
       }
     });
-    // <h1>${dbusername}</h1>document.querySelector(".artistBox").innerHTML += `<p></p>`;
   };
   populateFriends();
-  // const buttonId = "";
+
   const handleButton = (event) => {
     const button = event.target.closest("button");
     if (button) {
-      // buttonId = button.id;
       console.log(button.id);
       localStorage.setItem("button_id", button.id);
 
@@ -539,55 +497,45 @@ function APICalls() {
           tab.classList.remove("active");
         });
         document.querySelector(".artistBox").innerHTML = "";
-        // console.log("executes");
 
-        // console.log(tab);
-        // console.log(tab.);
         const idName = target.getAttribute("id");
-        // console.log();
+
         if (idName === "friends") {
           glider.style.transform = "translateX(0%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
 
         if (idName === "topArtists") {
           glider.style.transform = "translateX(100%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
         if (idName === "topTracks") {
           glider.style.transform = "translateX(200%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
         if (idName === "topGenres") {
           glider.style.transform = "translateX(300%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
         if (idName === "search") {
           glider.style.transform = "translateX(400%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
         if (idName === "ticketmaster") {
           glider.style.transform = "translateX(500%)";
           tab.classList.add("active");
           target.classList.add("active");
-          // tab.style.color = "#185ee0";
         }
       });
     });
   }
   $(document).ready(() => print());
   $(document).ready(() => loadFBData());
-  // $(document).ready(() => buttonActive());
 
   const handleClick = () => {
     localStorage.setItem("logged_in", false);
@@ -599,7 +547,6 @@ function APICalls() {
       <Route path="/" element={<Login />} />
     </Routes>
   ) : (
-    // <Login />
     <div className="container">
       <div className="welcome"></div>
       <ul className="tabs">
