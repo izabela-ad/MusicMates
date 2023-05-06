@@ -96,8 +96,6 @@ export const UserProfile = (props) => {
       }
     });
 
-    // console.log(username);
-    // console.log(password);
   };
   return loggedIn ? (
     <APICalls />
@@ -135,7 +133,6 @@ export const UserProfile = (props) => {
         <button
           className="formButton"
           onClick={() => googleAuth(auth, provider)}
-          // onClick={() => props.onFormSwitch("register")}
         >
           <img
             id="googlelogo"
@@ -147,7 +144,6 @@ export const UserProfile = (props) => {
         <button
           className="switchpage"
           onClick={handleClick}
-          // onClick={() => props.onFormSwitch("register")}
         >
           Don't have an account? Register here
         </button>

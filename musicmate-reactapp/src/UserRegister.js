@@ -1,5 +1,4 @@
 import "./App.css";
-//newly added
 import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +17,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const UserRegister = (props) => {
-  //   async function storeData() {
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
   const [username, setUser] = useState("");

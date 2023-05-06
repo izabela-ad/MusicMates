@@ -1,5 +1,4 @@
 import "./App.css";
-//newly added
 import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,9 +40,7 @@ export const Compare = () => {
     );
     if (result.ok && result.status === 200) {
       const data = await result.json();
-      //   console.log(data);
       if (data.artists.items[0].images.length !== 0) {
-        // console.log(data.artists.items[0].images[0].url);
         img_url = data.artists.items[0].images[0].url;
       }
     }
@@ -58,28 +55,23 @@ export const Compare = () => {
   var totalSharedCount = 0;
   const someothername = {};
   const getHalfScore = async () => {
-    // document.querySelector(".sharedArtistCon").innerHTML = "";
     const docFriendSnap = await getDoc(docFriendRef);
     const docUserSnap = await getDoc(docUserRef);
     var artistTotal = 0;
     var genreTotal = 0;
     for (var key in docUserSnap.data().topArtists) {
-      // console.log(key);
       if (docFriendSnap.data().topArtists.hasOwnProperty(key)) {
         var addedScore =
           docFriendSnap.data().topArtists[key] +
           docUserSnap.data().topArtists[key];
-        // addedScoreObj[key] = addedScore;
         artistTotal += addedScore;
       }
     }
     for (var key in docUserSnap.data().topGenres) {
-      // console.log(key);
       if (docFriendSnap.data().topGenres.hasOwnProperty(key)) {
         var addedScore =
           docFriendSnap.data().topGenres[key] +
           docUserSnap.data().topGenres[key];
-        //   genreScoreObj[key] = addedScore;
         genreTotal += addedScore;
       }
     }
@@ -128,18 +120,14 @@ export const Compare = () => {
 
       count++;
     }
-    // console.log("totalSharedCount: " + totalSharedCount);
     await getSimScore();
   };
-  //   console.log("exe");
   getSpecifiedDocArtists();
   const genreScoreObj = {};
   const getSpecifiedDocGenre = async () => {
-    // document.querySelector(".sharedArtistCon").innerHTML = "";
     const docFriendSnap = await getDoc(docFriendRef);
     const docUserSnap = await getDoc(docUserRef);
     for (var key in docUserSnap.data().topGenres) {
-      // console.log(key);
       if (docFriendSnap.data().topGenres.hasOwnProperty(key)) {
         var addedScore = 0;
         addedScore =
@@ -155,7 +143,6 @@ export const Compare = () => {
     for (let [key, value] of sortedArray) {
       let str = String(key);
       str = str.charAt(0).toUpperCase() + str.slice(1);
-      //   const img_url = await loadData(key);
       document.querySelector(".sharedGenreCon").innerHTML += `
           <div class="sharedGenre">
           <h1>${count}. ${str}</h1>
@@ -176,21 +163,16 @@ export const Compare = () => {
     }
   };
   getSpecifiedDocGenre();
-  //   var tempScore = 0;
 
   const getSimScore = async () => {
     const halfScore = await getHalfScore();
     console.log(halfScore);
     const sharedScore = (totalSharedCount / 10) * 0.5;
     const simScore = Math.round((halfScore + sharedScore) * 10000) / 100;
-    // console.log(
-    //   "simScore: " + simScore + "totalSharedCount: " + totalSharedCount
-    // );
     console.log("totalSharedCount: " + totalSharedCount);
     document.querySelector("#simscore").innerHTML += `
           <div id="simPie"class="pie animate" style="--p:${simScore};--c:#1db954"> ${simScore}%</div>     `;
   };
-  //   getSimScore();
 
   return (
     <div className="Compare">

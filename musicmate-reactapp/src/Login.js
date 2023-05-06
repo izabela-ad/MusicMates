@@ -34,12 +34,6 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 };
 
 const Login = (props) => {
-  // const navigate = useNavigate();
-
-  // const handleClick = () => {
-  //   navigate("/signin");
-  // };
-  // const location = useLocation();
   const generateRandomString = (length) => {
     let text = "";
     const possible =
@@ -63,12 +57,10 @@ const Login = (props) => {
 
     return base64encode(digest);
   }
-  // const state = generateRandomString(16);
   const codeVerifier = generateRandomString(128);
   const handleLogin = () => {
     generateCodeChallenge(codeVerifier).then((codeChallenge) => {
       const state = generateRandomString(16);
-      // let scope = "user-read-private user-read-email";
 
       localStorage.setItem("code_verifier", codeVerifier);
 

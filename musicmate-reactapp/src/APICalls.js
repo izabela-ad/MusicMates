@@ -81,7 +81,6 @@ function APICalls() {
   function animateDivs() {
     $(document).ready(function ($) {
       (function fadeNext(collection) {
-        // console.log("exe");
         collection.eq(0).fadeIn(300, function () {
           (collection = collection.slice(1)).length && fadeNext(collection);
         });
@@ -112,7 +111,6 @@ function APICalls() {
           }
         }
       }
-      // console.log(genreCount);
       var items = Object.keys(genreCount).map(function (key) {
         return [key, genreCount[key]];
       });
@@ -126,12 +124,10 @@ function APICalls() {
       }
       const map = new Map();
       for (let l = 0; l < items.length; l++) {
-        // console.log(localStorage.getItem("user_id"));
         map.set(items[l][0], Math.round((items[l][1] / count) * 10000) / 100);
       }
       const obj = Object.fromEntries(map);
       const newFields = { topGenres: obj };
-      // console.log(newFields);
       const updateUser = async (id) => {
         const userDoc = doc(db, "users", id);
         await updateDoc(userDoc, newFields);
@@ -215,15 +211,12 @@ function APICalls() {
       if (time_range === "long_term") {
         console.log(localStorage.getItem("user_id"));
 
-        // const arr = [];
         const map = new Map();
         for (let m = 0; m < Math.min(data.items.length, 20); m++) {
           map.set(data.items[m].name, 20 - m);
         }
-        // console.log(map);
         const obj = Object.fromEntries(map);
         const newFields = { topArtists: obj };
-        // console.log(newFields);
         const updateUser = async (id) => {
           const userDoc = doc(db, "users", id);
           await updateDoc(userDoc, newFields);
@@ -394,11 +387,8 @@ function APICalls() {
         }%</div>
        `;
       }
-      // <p> </p></br>
-      // console.log(map);
       const obj = Object.fromEntries(map);
       const newFields = { topGenres: obj };
-      // console.log(newFields);
       const updateUser = async (id) => {
         const userDoc = doc(db, "users", id);
         await updateDoc(userDoc, newFields);
@@ -409,7 +399,6 @@ function APICalls() {
   console.log("access_token: " + localStorage.getItem("access-token"));
   const tokenType = localStorage.getItem("access-token");
   const loadFBData = async () => {
-    // const artists = await loadingFBArtists(tokenType);
     const genres = await loadingFBGenres(tokenType);
   };
   const loadData = async () => {
@@ -482,7 +471,6 @@ function APICalls() {
 
   function print() {
     const tabs = document.querySelectorAll("[data-tab-target]");
-    // console.log(tabs);
     const tabContents = document.querySelectorAll("[data-tab-content]");
     tabs.forEach(async (tab) => {
       tab.addEventListener("click", () => {
